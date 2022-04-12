@@ -20,6 +20,18 @@ public class Player{
     public static int baseCriticalChance;
     public static int baseLifeSteal;
     public static int money;
+    public static Weapon weapon;
+    public static Armor armor;
+    public static Pendant pendant;
+
+    //Initialize the equipment
+    public Player(){
+        baseAttack = weapon != null ? baseAttack + weapon.getAdditionalAttack() : baseAttack;
+        baseDefense = armor != null ? baseDefense + armor.getAdditionalDefense() : baseDefense;
+        baseCriticalChance = pendant != null ? baseCriticalChance + pendant.getAdditionalCriticalChance() : baseCriticalChance;
+        baseLifeSteal = pendant != null ? baseLifeSteal + pendant.getAdditionalLifeSteal() : baseLifeSteal;
+        baseMaxHealth = pendant != null ? baseMaxHealth + pendant.getAdditionalMaxHealth() : baseMaxHealth;
+    }
 
     //To heal player health
     public static void heal(int healValue){
