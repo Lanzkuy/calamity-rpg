@@ -1,7 +1,6 @@
 package entity;
 
 import items.*;
-import data.*;
 
 import java.util.*;
 
