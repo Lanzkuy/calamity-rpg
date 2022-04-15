@@ -27,7 +27,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="b2645" class="javax.swing.JLabel" binding="lblTitle">
+          <component id="b2645" class="javax.swing.JLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -264,7 +264,7 @@
                       <text value="Level 12"/>
                     </properties>
                   </component>
-                  <component id="6ff34" class="javax.swing.JLabel" binding="lblMoney">
+                  <component id="6ff34" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -297,7 +297,7 @@
                       <text value=":"/>
                     </properties>
                   </component>
-                  <component id="bd8eb" class="javax.swing.JLabel" binding="lblAttack">
+                  <component id="bd8eb" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -330,7 +330,7 @@
                       <text value="230"/>
                     </properties>
                   </component>
-                  <component id="c10b9" class="javax.swing.JLabel" binding="lvlDefense">
+                  <component id="c10b9" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -363,7 +363,7 @@
                       <text value="200"/>
                     </properties>
                   </component>
-                  <component id="7c11d" class="javax.swing.JLabel" binding="lblCriticalChance">
+                  <component id="7c11d" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -374,7 +374,7 @@
                       <text value="Critical Chance"/>
                     </properties>
                   </component>
-                  <component id="df079" class="javax.swing.JLabel" binding="lblLifesteal">
+                  <component id="df079" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
                       <forms defaultalign-horz="false" defaultalign-vert="false"/>
