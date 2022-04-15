@@ -7,11 +7,10 @@ import entity.HuntEnemy;
 import entity.Player;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class frmGameMenu extends JFrame{
     private JPanel pGameMenu;
-    private JScrollPane pScrollLog;
+    private JScrollPane pScrollPane;
     private JTextPane pLogText;
     private JProgressBar healthBar;
     private JProgressBar expBar;
@@ -83,19 +82,17 @@ public class frmGameMenu extends JFrame{
                 else{
                     pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
                 }
-                pScrollLog.getViewport().add(pLogText);
+                pScrollPane.getViewport().add(pLogText);
                 reload();
             }
         });
     }
 
     private void btnMapOnClick(){
-        btnMap.addActionListener(e -> {
-            frmChangeMap fcm = new frmChangeMap(this);
-        });
+        btnMap.addActionListener(e -> new frmChangeMap(this));
     }
 
     public static void main(String[] args) {
-        frmGameMenu fgm = new frmGameMenu();
+        new frmGameMenu();
     }
 }

@@ -33,7 +33,7 @@ public class frmChangeMap extends JDialog implements ActionListener{
         setMinimumSize(pChangeMap.getMinimumSize());
         setMaximumSize(pChangeMap.getMaximumSize());
         setResizable(false);
-        setLocationRelativeTo(SwingUtilities.getWindowAncestor(fgm));
+        setLocationRelativeTo(fgm);
         setVisible(true);
         pack();
     }
