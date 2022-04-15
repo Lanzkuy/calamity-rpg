@@ -11,14 +11,6 @@ import java.awt.*;
 
 public class frmGameMenu extends JFrame{
     private JPanel pGameMenu;
-    private JPanel pContentBottom;
-    private JPanel pContentTop;
-    private JPanel pStat;
-    private JPanel pLog;
-    private JPanel pTitle;
-    private JPanel pHealthBar;
-    private JPanel pStatValue;
-    private JPanel pExpBar;
     private JScrollPane pScrollLog;
     private JTextPane pLogText;
     private JProgressBar healthBar;
@@ -38,11 +30,11 @@ public class frmGameMenu extends JFrame{
     private JLabel lblLifestealValue;
 
     public frmGameMenu(){
-        reload();
         initialize();
     }
 
-    public void initialize(){
+    private void initialize(){
+        setTitle("Calamity RPG");
         setContentPane(pGameMenu);
         setMinimumSize(pGameMenu.getMinimumSize());
         setMaximumSize(pGameMenu.getMaximumSize());
@@ -51,11 +43,14 @@ public class frmGameMenu extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
+        reload();
 
         btnHuntOnClick();
+        btnMapOnClick();
     }
 
     public void reload(){
+        DataLoader.clearData();
         DataLoader.loadData();
 
         lblPlayerName.setText(Player.name);
@@ -76,7 +71,7 @@ public class frmGameMenu extends JFrame{
         expBar.setString(Player.exp+"/"+Player.maxExp);
     }
 
-    public void btnHuntOnClick(){
+    private void btnHuntOnClick(){
         btnHunt.addActionListener(e -> {
             //Randomize the enemy
             HuntEnemy ce = DataStorage.getRandomHuntEnemy();
@@ -89,9 +84,14 @@ public class frmGameMenu extends JFrame{
                     pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
                 }
                 pScrollLog.getViewport().add(pLogText);
-                pScrollLog.updateUI();
                 reload();
             }
+        });
+    }
+
+    private void btnMapOnClick(){
+        btnMap.addActionListener(e -> {
+            frmChangeMap fcm = new frmChangeMap(this);
         });
     }
 

@@ -1,6 +1,7 @@
 package data;
 
 import entity.HuntEnemy;
+import entity.Map;
 import entity.Player;
 
 import java.io.BufferedReader;
@@ -8,9 +9,32 @@ import java.io.File;
 import java.io.FileReader;
 
 public class DataLoader {
+    public static void clearData(){
+        DataStorage.LM.clear();
+        DataStorage.LHE.clear();
+    }
     public static void loadData(){
-        loadPlayerData();
+        loadMapData();
         loadEnemyData();
+        loadPlayerData();
+    }
+
+    public static void loadMapData(){
+        String line;
+        Map m;
+        try{
+            File file = new File("src/main/resources/MapData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                m = new Map(values[0], values[1], values[2]);
+                DataStorage.LM.add(m);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadMapData : " + ex);
+        }
     }
 
     public static void loadEnemyData(){

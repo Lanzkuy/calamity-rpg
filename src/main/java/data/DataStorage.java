@@ -1,6 +1,7 @@
 package data;
 
 import entity.HuntEnemy;
+import entity.Map;
 import entity.Player;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Random;
 
 public class DataStorage {
     public static ArrayList<HuntEnemy> LHE = new ArrayList<>();
+    public static ArrayList<Map> LM = new ArrayList<>();
 
     public static HuntEnemy getRandomHuntEnemy(){
         Random rand = new Random();
@@ -37,6 +39,22 @@ public class DataStorage {
         }
         catch (Exception ex){
             System.err.println("Something went wrong in getRandomHuntEnemy : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    public static Map getMap(String mapID){
+        try{
+            if(!mapID.equals("")){
+                for (Map hi : LM) {
+                    if(mapID.equals(hi.getMapID())){
+                        return hi;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getMap : " + ex.getMessage());
         }
         return null;
     }
