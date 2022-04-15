@@ -1,5 +1,6 @@
 package engine;
 
+import data.DataSaver;
 import data.DataStorage;
 import entity.HuntEnemy;
 import entity.Player;
@@ -48,6 +49,7 @@ public class Hunt {
                             append(" in the panic\n");
 
                     Player.money -= moneyDrop;
+                    DataSaver.savePlayerData();
                     return logOutput.toString();
                 }
                 else if (enemy.getHealth() == 0) {
@@ -62,13 +64,17 @@ public class Hunt {
                                 append("and \n");
                     }
                     else{
-                        logOutput.append("You win agains " + enemy.getName() + "\n" +
-                                "You get " + exp + " exp and $" + moneyDrop + " money\n");
+                        logOutput.append("You win agains ").
+                                append(enemy.getName()).
+                                append("\n").append("You get ").
+                                append(exp).append(" exp and $").
+                                append(moneyDrop).append(" money\n");
                     }
 
                     Player.exp += exp;
                     Player.money += moneyDrop;
                     Player.levelUp();
+                    DataSaver.savePlayerData();
                     return logOutput.toString();
                 }
             }
