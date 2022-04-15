@@ -1,5 +1,6 @@
 package data;
 
+import entity.HuntEnemy;
 import entity.Player;
 
 import java.io.BufferedReader;
@@ -9,6 +10,27 @@ import java.io.FileReader;
 public class DataLoader {
     public static void loadData(){
         loadPlayerData();
+        loadEnemyData();
+    }
+
+    public static void loadEnemyData(){
+        String line;
+        HuntEnemy ce;
+        try{
+            File file = new File("src/main/resources/EnemyData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                ce = new HuntEnemy(values[0], values[1], values[2], values[3], values[4],
+                        Integer.parseInt(values[5]), Integer.parseInt(values[6]), Integer.parseInt(values[7]),
+                        Integer.parseInt(values[8]), (int) Float.parseFloat(values[9]));
+                DataStorage.LHE.add(ce);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadEnemyData : " + ex);
+        }
     }
 
     public static void loadPlayerData(){

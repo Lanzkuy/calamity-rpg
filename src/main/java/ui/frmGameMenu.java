@@ -56,7 +56,7 @@ public class frmGameMenu extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
-    
+
         //Label
         lblPlayerName.setText(Player.name);
         lblLevel.setText("Level " + Player.level);
