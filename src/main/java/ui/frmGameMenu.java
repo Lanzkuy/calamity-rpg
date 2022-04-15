@@ -12,26 +12,26 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class frmGameMenu {
+public class frmGameMenu extends JFrame{
     private JPanel pGameMenu;
     private JPanel pContentBottom;
     private JPanel pContentTop;
     private JPanel pStat;
     private JPanel pLog;
-    private JScrollPane pScrollLog;
     private JPanel pTitle;
-    private JLabel lblTitle;
     private JPanel pHealthBar;
     private JPanel pStatValue;
+    private JPanel pExpBar;
+    private JScrollPane pScrollLog;
     private JProgressBar healthBar;
     private JProgressBar expBar;
-    private JPanel pExpBar;
     private JButton btnHunt;
     private JButton btnShop;
     private JButton btnInventory;
     private JButton btnBlacksmith;
     private JButton btnMap;
     private JButton btnDungeon;
+    private JLabel lblTitle;
     private JLabel lblPlayerName;
     private JLabel lblLevel;
     private JLabel lblMoney;
@@ -45,16 +45,29 @@ public class frmGameMenu {
     private JLabel lblLifesteal;
     private JLabel lblLifestealValue;
 
+    public frmGameMenu(){
+        initialize();
+
+    }
+
+    public void initialize(){
+        //Frame
+        setContentPane(pGameMenu);
+        setMinimumSize(pGameMenu.getMinimumSize());
+        setMaximumSize(pGameMenu.getMaximumSize());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        pack();
+
+        //ProgressBar
+        healthBar.setValue(70);
+        expBar.setValue(50);
+    }
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame("frmGameMenu");
         frmGameMenu fgm = new frmGameMenu();
-        frame.setContentPane(fgm.pGameMenu);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(fgm.pGameMenu.getMinimumSize());
-        frame.setMaximumSize(fgm.pGameMenu.getMaximumSize());
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
 }
