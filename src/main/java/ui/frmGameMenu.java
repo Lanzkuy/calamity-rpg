@@ -92,6 +92,10 @@ public class frmGameMenu extends JFrame{
         btnMap.addActionListener(e -> new frmChangeMap(this));
     }
 
+    private void btnInventoryOnClick(){
+        btnMap.addActionListener(e -> new frmInventory(this));
+    }
+
     public static void main(String[] args) {
         new frmGameMenu();
     }

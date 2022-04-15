@@ -3,6 +3,7 @@ package data;
 import entity.HuntEnemy;
 import entity.Map;
 import entity.Player;
+import items.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,13 +11,62 @@ import java.io.FileReader;
 
 public class DataLoader {
     public static void clearData(){
-        DataStorage.LM.clear();
+        DataStorage.LW.clear();
+        DataStorage.LA.clear();
+        DataStorage.LP.clear();
+        DataStorage.LC.clear();
+        DataStorage.LHI.clear();
         DataStorage.LHE.clear();
     }
+
     public static void loadData(){
+        loadItemData();
         loadMapData();
         loadEnemyData();
         loadPlayerData();
+    }
+
+    public static void loadItemData(){
+        String line;
+        Weapon w = null;
+        Armor a = null;
+        Pendant p = null;
+        Consumable c = null;
+        HuntingItem hi = null;
+        try{
+            File file = new File("src/main/resources/ItemData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                switch (values[2]) {
+                    case "Weapon" -> w = new Weapon(values[0], values[1], values[2],
+                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                            Integer.parseInt(values[5]));
+                    case "Armor" -> a = new Armor(values[0], values[1], values[2],
+                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                            Integer.parseInt(values[5]));
+                    case "Pendant" -> p = new Pendant(values[0], values[1], values[2],
+                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                            Integer.parseInt(values[5]), Integer.parseInt(values[6]),
+                            Integer.parseInt(values[7]));
+                    case "Consumable" -> c = new Consumable(values[0], values[1], values[2],
+                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                            Integer.parseInt(values[5]));
+                    case "Hunting Item" -> hi = new HuntingItem(values[0], values[1], values[2],
+                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]));
+                    default -> System.out.println("This type of item is illegal : " + values[2]);
+                }
+                DataStorage.LW.add(w);
+                DataStorage.LA.add(a);
+                DataStorage.LP.add(p);
+                DataStorage.LC.add(c);
+                DataStorage.LHI.add(hi);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadItemData : " + ex);
+        }
     }
 
     public static void loadMapData(){

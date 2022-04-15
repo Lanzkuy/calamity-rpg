@@ -9,4 +9,8 @@ public class frmInventory {
     private JButton btnCategoryConsumable;
     private JButton btnCategoryHuntingItem;
     private JScrollPane pScrollPane;
+
+    public frmInventory(frmGameMenu fgm){
+
+    }
 }
