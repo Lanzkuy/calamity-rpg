@@ -1,18 +1,13 @@
 package ui;
 
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import data.DataLoader;
+import data.DataStorage;
+import engine.Hunt;
+import entity.HuntEnemy;
 import entity.Player;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.util.Locale;
 
 public class frmGameMenu extends JFrame{
     private JPanel pGameMenu;
@@ -25,6 +20,7 @@ public class frmGameMenu extends JFrame{
     private JPanel pStatValue;
     private JPanel pExpBar;
     private JScrollPane pScrollLog;
+    private JTextPane pLogText;
     private JProgressBar healthBar;
     private JProgressBar expBar;
     private JButton btnHunt;
@@ -42,12 +38,11 @@ public class frmGameMenu extends JFrame{
     private JLabel lblLifestealValue;
 
     public frmGameMenu(){
-        DataLoader.loadData();
+        reload();
         initialize();
     }
 
     public void initialize(){
-        //Frame
         setContentPane(pGameMenu);
         setMinimumSize(pGameMenu.getMinimumSize());
         setMaximumSize(pGameMenu.getMaximumSize());
@@ -57,7 +52,12 @@ public class frmGameMenu extends JFrame{
         setVisible(true);
         pack();
 
-        //Label
+        btnHuntOnClick();
+    }
+
+    public void reload(){
+        DataLoader.loadData();
+
         lblPlayerName.setText(Player.name);
         lblLevel.setText("Level " + Player.level);
         lblMoneyValue.setText("$"+Player.money);
@@ -66,7 +66,6 @@ public class frmGameMenu extends JFrame{
         lblCriticalChanceValue.setText(Player.baseCriticalChance+"%");
         lblLifestealValue.setText(Player.baseLifeSteal+"%");
 
-        //ProgressBar
         healthBar.setStringPainted(true);
         healthBar.setMaximum(Player.baseMaxHealth);
         healthBar.setValue(Player.health);
@@ -75,6 +74,25 @@ public class frmGameMenu extends JFrame{
         expBar.setMaximum(Player.maxExp);
         expBar.setValue(Player.exp);
         expBar.setString(Player.exp+"/"+Player.maxExp);
+    }
+
+    public void btnHuntOnClick(){
+        btnHunt.addActionListener(e -> {
+            //Randomize the enemy
+            HuntEnemy ce = DataStorage.getRandomHuntEnemy();
+            if(ce != null){
+                //Execute hunt battle system
+                if(Player.health != 0){
+                    pLogText.setText(pLogText.getText() + "\n" + Hunt.huntBattle(ce));
+                }
+                else{
+                    pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
+                }
+                pScrollLog.getViewport().add(pLogText);
+                pScrollLog.updateUI();
+                reload();
+            }
+        });
     }
 
     public static void main(String[] args) {
