@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.PrintWriter;
 
 public class DataSaver {
+    //To save player data to csv file
     public static void savePlayerData(){
         try{
             File file = new File("src/main/resources/PlayerData.csv");

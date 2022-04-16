@@ -2,7 +2,7 @@ package items;
 
 public class Consumable extends Item{
     private int healValue;
-    //Constructor
+
     public Consumable(String itemID, String name, String type, int price, boolean sellable, int healValue){
         setItemID(itemID);
         setName(name);

@@ -42,16 +42,16 @@ public class frmGameMenu extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
+        DataLoader.clearData();
+        DataLoader.loadData();
         reload();
 
         btnHuntOnClick();
         btnMapOnClick();
+        btnInventoryOnClick();
     }
 
     public void reload(){
-        DataLoader.clearData();
-        DataLoader.loadData();
-
         lblPlayerName.setText(Player.name);
         lblLevel.setText("Level " + Player.level);
         lblMoneyValue.setText("$"+Player.money);
@@ -84,6 +84,8 @@ public class frmGameMenu extends JFrame{
                 }
                 pScrollPane.getViewport().add(pLogText);
                 reload();
+                DataLoader.clearData();
+                DataLoader.loadData();
             }
         });
     }
@@ -93,7 +95,7 @@ public class frmGameMenu extends JFrame{
     }
 
     private void btnInventoryOnClick(){
-        btnMap.addActionListener(e -> new frmInventory(this));
+        btnInventory.addActionListener(e -> new frmInventory(this));
     }
 
     public static void main(String[] args) {

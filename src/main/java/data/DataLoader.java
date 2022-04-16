@@ -1,5 +1,6 @@
 package data;
 
+import engine.Inventory;
 import entity.HuntEnemy;
 import entity.Map;
 import entity.Player;
@@ -10,22 +11,28 @@ import java.io.File;
 import java.io.FileReader;
 
 public class DataLoader {
+    //Clear all data in data storage
     public static void clearData(){
         DataStorage.LW.clear();
         DataStorage.LA.clear();
         DataStorage.LP.clear();
         DataStorage.LC.clear();
         DataStorage.LHI.clear();
+        DataStorage.LI.clear();
+        DataStorage.LM.clear();
         DataStorage.LHE.clear();
     }
 
+    //Load all data
     public static void loadData(){
         loadItemData();
+        loadInventoryData();
         loadMapData();
         loadEnemyData();
         loadPlayerData();
     }
 
+    //Load item data to various type
     public static void loadItemData(){
         String line;
         Weapon w = null;
@@ -40,28 +47,38 @@ public class DataLoader {
             while ((line = br.readLine()) != null){
                 String[] values = line.split(";");
                 switch (values[2]) {
-                    case "Weapon" -> w = new Weapon(values[0], values[1], values[2],
-                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                            Integer.parseInt(values[5]));
-                    case "Armor" -> a = new Armor(values[0], values[1], values[2],
-                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                            Integer.parseInt(values[5]));
-                    case "Pendant" -> p = new Pendant(values[0], values[1], values[2],
-                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                            Integer.parseInt(values[5]), Integer.parseInt(values[6]),
-                            Integer.parseInt(values[7]));
-                    case "Consumable" -> c = new Consumable(values[0], values[1], values[2],
-                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                            Integer.parseInt(values[5]));
-                    case "Hunting Item" -> hi = new HuntingItem(values[0], values[1], values[2],
-                            Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]));
+                    case "Weapon" -> {
+                        w = new Weapon(values[0], values[1], values[2],
+                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                                Integer.parseInt(values[5]));
+                        DataStorage.LW.add(w);
+                    }
+                    case "Armor" -> {
+                        a = new Armor(values[0], values[1], values[2],
+                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                                Integer.parseInt(values[5]));
+                        DataStorage.LA.add(a);
+                    }
+                    case "Pendant" -> {
+                        p = new Pendant(values[0], values[1], values[2],
+                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                                Integer.parseInt(values[5]), Integer.parseInt(values[6]),
+                                Integer.parseInt(values[7]));
+                        DataStorage.LP.add(p);
+                    }
+                    case "Consumable" -> {
+                        c = new Consumable(values[0], values[1], values[2],
+                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
+                                Integer.parseInt(values[10]));
+                        DataStorage.LC.add(c);
+                    }
+                    case "Hunting Item" -> {
+                        hi = new HuntingItem(values[0], values[1], values[2],
+                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]));
+                        DataStorage.LHI.add(hi);
+                    }
                     default -> System.out.println("This type of item is illegal : " + values[2]);
                 }
-                DataStorage.LW.add(w);
-                DataStorage.LA.add(a);
-                DataStorage.LP.add(p);
-                DataStorage.LC.add(c);
-                DataStorage.LHI.add(hi);
             }
         }
         catch (Exception ex){
@@ -69,6 +86,26 @@ public class DataLoader {
         }
     }
 
+    //Load inventory data
+    public static void loadInventoryData(){
+        String line;
+        Inventory i;
+        try{
+            File file = new File("src/main/resources/InventoryData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                i = new Inventory(values[0], values[1], values[2], Integer.parseInt(values[3]));
+                DataStorage.LI.add(i);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadInventoryData : " + ex);
+        }
+    }
+
+    //Load map data
     public static void loadMapData(){
         String line;
         Map m;
@@ -87,6 +124,7 @@ public class DataLoader {
         }
     }
 
+    //Load enemy data
     public static void loadEnemyData(){
         String line;
         HuntEnemy ce;
@@ -107,6 +145,7 @@ public class DataLoader {
         }
     }
 
+    //Load player data
     public static void loadPlayerData(){
         try{
             if(Player.name == null){

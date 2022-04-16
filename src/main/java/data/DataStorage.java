@@ -1,5 +1,6 @@
 package data;
 
+import engine.Inventory;
 import entity.HuntEnemy;
 import entity.Map;
 import entity.Player;
@@ -10,14 +11,119 @@ import java.util.Collections;
 import java.util.Random;
 
 public class DataStorage {
+    //To keep data while the program is running
     public static ArrayList<Weapon> LW = new ArrayList<>();
     public static ArrayList<Armor> LA = new ArrayList<>();
     public static ArrayList<Pendant> LP = new ArrayList<>();
     public static ArrayList<Consumable> LC = new ArrayList<>();
     public static ArrayList<HuntingItem> LHI = new ArrayList<>();
+    public static ArrayList<Inventory> LI = new ArrayList<>();
     public static ArrayList<HuntEnemy> LHE = new ArrayList<>();
     public static ArrayList<Map> LM = new ArrayList<>();
 
+    //To get weapon by itemID
+    public static Weapon getWeapon(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (Weapon w : LW) {
+                    if(itemID.equals(w.getItemID())){
+                        return w;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getWeapon : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get armor by itemID
+    public static Armor getArmor(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (Armor a : LA) {
+                    if(itemID.equals(a.getItemID())){
+                        return a;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getArmor : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get pendant by itemID
+    public static Pendant getPendant(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (Pendant p : LP) {
+                    if(itemID.equals(p.getItemID())){
+                        return p;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getPendant: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get consumable item by itemID
+    public static Consumable getConsumable(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (Consumable c : LC) {
+                    if(itemID.equals(c.getItemID())){
+                        return c;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getConsumable : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get hunting item by itemID
+    public static HuntingItem getHuntingItem(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (HuntingItem hi : LHI) {
+                    if(itemID.equals(hi.getItemID())){
+                        return hi;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getHuntingItem : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get map by mapID
+    public static Map getMap(String mapID){
+        try{
+            if(!mapID.equals("")){
+                for (Map hi : LM) {
+                    if(mapID.equals(hi.getMapID())){
+                        return hi;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getMap : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get random hunt enemy and random level by player current map
     public static HuntEnemy getRandomHuntEnemy(){
         Random rand = new Random();
         try{
@@ -45,102 +151,6 @@ public class DataStorage {
         }
         catch (Exception ex){
             System.err.println("Something went wrong in getRandomHuntEnemy : " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static Weapon getWeapon(String itemID){
-        try{
-            if(!itemID.equals("")){
-                for (Weapon w : LW) {
-                    if(itemID.equals(w.getItemID())){
-                        return w;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getWeapon : " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static Armor getArmor(String itemID){
-        try{
-            if(!itemID.equals("")){
-                for (Armor a : LA) {
-                    if(itemID.equals(a.getItemID())){
-                        return a;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getArmor : " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static Pendant getPendant(String itemID){
-        try{
-            if(!itemID.equals("")){
-                for (Pendant p : LP) {
-                    if(itemID.equals(p.getItemID())){
-                        return p;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getPendant: " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static Consumable getConsumable(String itemID){
-        try{
-            if(!itemID.equals("")){
-                for (Consumable c : LC) {
-                    if(itemID.equals(c.getItemID())){
-                        return c;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getConsumable : " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static HuntingItem getHuntingItem(String itemID){
-        try{
-            if(!itemID.equals("")){
-                for (HuntingItem hi : LHI) {
-                    if(itemID.equals(hi.getItemID())){
-                        return hi;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getHuntingItem : " + ex.getMessage());
-        }
-        return null;
-    }
-
-    public static Map getMap(String mapID){
-        try{
-            if(!mapID.equals("")){
-                for (Map hi : LM) {
-                    if(mapID.equals(hi.getMapID())){
-                        return hi;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getMap : " + ex.getMessage());
         }
         return null;
     }

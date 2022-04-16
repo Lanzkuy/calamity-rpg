@@ -14,9 +14,9 @@ import java.util.Objects;
 public class frmChangeMap extends JDialog implements ActionListener{
     private final frmGameMenu fgm;
     private JPanel pChangeMap;
+    private JPanel pMaps;
     private JLabel lblCurrentMap;
     private JScrollPane pScrollPane;
-    private JPanel pMaps;
 
     public frmChangeMap(frmGameMenu fgm){
         super(fgm, "Change Map", ModalityType.APPLICATION_MODAL);
@@ -58,10 +58,11 @@ public class frmChangeMap extends JDialog implements ActionListener{
             button.setBackground(new Color(232, 232, 232));
             button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             button.setVisible(true);
+            button.addActionListener(this);
+
             if(mapData.get(i).getStatus().equals("Lock")){
                 button.setEnabled(false);
             }
-            button.addActionListener(this);
 
             pMaps.setLayout(new GridLayout(i+1, 0));
             pMaps.add(button);

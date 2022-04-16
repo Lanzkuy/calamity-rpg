@@ -11,6 +11,7 @@ public class Map {
         setStatus(status);
     }
 
+    //Getter Setter
     public String getMapID() {
         return mapID;
     }

@@ -4,7 +4,7 @@ public class Pendant extends Item{
     private int additionalCriticalChance;
     private int additionalLifeSteal;
     private int additionalMaxHealth;
-    //Constructor
+
     public Pendant(String itemID, String name, String type, int price, boolean sellable,
                    int additionalCriticalChance, int additionalLifeSteal, int additionalMaxHealth){
         setItemID(itemID);

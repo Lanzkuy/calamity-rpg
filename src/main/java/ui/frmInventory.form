@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.frmInventory">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="pInventory" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="512" height="600"/>
@@ -184,7 +184,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="171c9" class="javax.swing.JButton" binding="btnCategoryConsumable">
+                  <component id="171c9" class="javax.swing.JButton" binding="btnTypeConsumable">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -196,7 +196,7 @@
                       <text value="CONSUMABLE"/>
                     </properties>
                   </component>
-                  <component id="89ecd" class="javax.swing.JButton" binding="btnCategoryHuntingItem">
+                  <component id="89ecd" class="javax.swing.JButton" binding="btnTypeHuntingItem">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -223,7 +223,25 @@
                   <horizontalScrollBarPolicy value="31"/>
                 </properties>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <grid id="c7a70" binding="pInventoryItem" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties>
+                      <background color="-1513240"/>
+                      <font name="Comic Sans MS"/>
+                      <foreground color="-1513240"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <vspacer id="1d01a">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </vspacer>
+                    </children>
+                  </grid>
+                </children>
               </scrollpane>
             </children>
           </grid>

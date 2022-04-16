@@ -2,7 +2,7 @@ package items;
 
 public class Weapon extends Item{
     private int additionalAttack;
-    //Constructor
+
     public Weapon(String itemID, String name, String type, int price, boolean sellable, int additionalAttack){
         setItemID(itemID);
         setName(name);

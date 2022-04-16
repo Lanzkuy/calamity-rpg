@@ -1,12 +1,9 @@
 package engine;
 
 import data.DataSaver;
-import data.DataStorage;
 import entity.HuntEnemy;
 import entity.Player;
-import items.HuntingItem;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class Hunt {
@@ -16,7 +13,7 @@ public class Hunt {
         int moneyDrop = rand.nextInt(50 - 1) + 1;
 
         try{
-            //Battle system
+            //Enemy encounter
             logOutput.append(String.format("""
                     You encountered %s
                     Level : %s
@@ -37,11 +34,12 @@ public class Hunt {
                 enemyDamage = 0;
             }
 
+            //Loop until player/enemy health = 0
             for (;;) {
                 Player.getDamage(enemyDamage);
                 enemy.getDamage(playerDamage);
 
-                //If player or enemy death
+                //If player/enemy death
                 if (Player.health == 0) {
                     logOutput.append("You lose agains ").
                             append(enemy.getName()).append("\n").
@@ -55,6 +53,7 @@ public class Hunt {
                 else if (enemy.getHealth() == 0) {
                     int exp = enemy.getExpDrop();
 
+                    //Item drop RNG
                     if (rand.nextInt(100 - 1) + 1 <= 50) {
                         logOutput.append("You win agains ").
                                 append(enemy.getName()).append("\n").
@@ -80,7 +79,7 @@ public class Hunt {
             }
         }
         catch (Exception ex){
-            System.err.println("Something went wrong in Hunt: " + ex);
+            System.err.println("Something went wrong in huntBattle: " + ex);
         }
         return null;
     }
