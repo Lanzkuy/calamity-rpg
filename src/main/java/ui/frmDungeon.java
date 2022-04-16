@@ -66,9 +66,9 @@ public class frmDungeon extends  JDialog{
 
     private void loadHealthBar(){
         playerHealthBar.setStringPainted(true);
-        playerHealthBar.setMaximum(Player.baseMaxHealth);
+        playerHealthBar.setMaximum(Player.totalMaxHealth);
         playerHealthBar.setValue(Player.health);
-        playerHealthBar.setString(Player.health+"/"+Player.baseMaxHealth);
+        playerHealthBar.setString(Player.health+"/"+Player.totalMaxHealth);
         bossHealthBar.setStringPainted(true);
         bossHealthBar.setMaximum(boss.getBaseMaxHealth());
         bossHealthBar.setValue(boss.getHealth());

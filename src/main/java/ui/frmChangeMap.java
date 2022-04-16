@@ -27,7 +27,6 @@ public class frmChangeMap extends JDialog implements ActionListener{
     private void initialize(){
         lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
         loadButton();
-        btnExitOnClick();
 
         setContentPane(pChangeMap);
         setMinimumSize(pChangeMap.getMinimumSize());
@@ -36,15 +35,6 @@ public class frmChangeMap extends JDialog implements ActionListener{
         setLocationRelativeTo(fgm);
         setVisible(true);
         pack();
-    }
-
-    private void btnExitOnClick(){
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                fgm.setEnabled(true);
-            }
-        });
     }
 
     private void loadButton(){

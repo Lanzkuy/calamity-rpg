@@ -3,12 +3,10 @@ package items;
 public class Consumable extends Item{
     private int healValue;
 
-    public Consumable(String itemID, String name, String type, int price, boolean sellable, int healValue){
+    public Consumable(String itemID, String name, String type, int healValue){
         setItemID(itemID);
         setName(name);
         setType(type);
-        setPrice(price);
-        setSellable(sellable);
         setHealValue(healValue);
     }
 

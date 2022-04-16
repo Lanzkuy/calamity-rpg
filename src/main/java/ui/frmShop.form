@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.frmShop">
+  <grid id="27dc6" binding="pShop" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="600"/>
+    </constraints>
+    <properties>
+      <background color="-13948117"/>
+      <font name="Comic Sans MS"/>
+      <foreground color="-1513240"/>
+      <maximumSize width="500" height="600"/>
+      <minimumSize width="500" height="600"/>
+      <preferredSize width="500" height="600"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="6f579" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Comic Sans MS" size="24" style="1"/>
+          <foreground color="-1513240"/>
+          <text value="SHOP"/>
+        </properties>
+      </component>
+      <grid id="eff4c" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-13948117"/>
+          <font name="Comic Sans MS"/>
+          <foreground color="-1513240"/>
+        </properties>
+        <border type="line">
+          <color color="-1513240"/>
+        </border>
+        <children>
+          <component id="aaf2b" class="javax.swing.JLabel" binding="lblMoney">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="14" style="1"/>
+              <foreground color="-1513240"/>
+              <text value="Money : $0"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="ea335" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-13619152"/>
+          <font name="Comic Sans MS"/>
+          <foreground color="-1513240"/>
+        </properties>
+        <border type="line">
+          <color color="-1513240"/>
+        </border>
+        <children>
+          <grid id="1362a" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-13948117"/>
+              <enabled value="true"/>
+              <font name="Comic Sans MS"/>
+              <foreground color="-1513240"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="960b7" class="javax.swing.JButton" binding="btnBuy">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13948117"/>
+                  <borderPainted value="false"/>
+                  <font name="Comic Sans MS" size="14"/>
+                  <foreground color="-1513240"/>
+                  <text value="BUY"/>
+                </properties>
+              </component>
+              <component id="7edb2" class="javax.swing.JButton" binding="btnSell">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-10000537"/>
+                  <borderPainted value="false"/>
+                  <font name="Comic Sans MS" size="14"/>
+                  <foreground color="-1513240"/>
+                  <iconTextGap value="4"/>
+                  <inheritsPopupMenu value="false"/>
+                  <text value="SELL"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="bf33c" binding="buyHeader" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-13948117"/>
+              <font name="Comic Sans MS"/>
+              <foreground color="-1513240"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="dfc42" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-1513240"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="4e823" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Comic Sans MS" size="14"/>
+                  <foreground color="-1513240"/>
+                  <text value="      Name"/>
+                </properties>
+              </component>
+              <component id="e1790" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Comic Sans MS" size="14"/>
+                  <foreground color="-1513240"/>
+                  <text value="Price"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="433c6" binding="sellHeader" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-13948117"/>
+              <font name="Comic Sans MS"/>
+              <foreground color="-1513240"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="9f8d0" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-1513240"/>
+                  <text value="               "/>
+                </properties>
+              </component>
+              <component id="9fb04" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Comic Sans MS" size="12"/>
+                  <foreground color="-1513240"/>
+                  <text value="Name"/>
+                </properties>
+              </component>
+              <component id="d57c6" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Comic Sans MS" size="12"/>
+                  <foreground color="-1513240"/>
+                  <text value="Price"/>
+                </properties>
+              </component>
+              <component id="fbc77" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Comic Sans MS" size="12"/>
+                  <foreground color="-1513240"/>
+                  <text value="Quantity"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <scrollpane id="ad9e9" binding="pScrollPane">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1513240"/>
+              <font name="Comic Sans MS"/>
+              <foreground color="-1513240"/>
+              <horizontalScrollBarPolicy value="31"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="c9af5" binding="pShopItem" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints/>
+                <properties>
+                  <background color="-1513240"/>
+                  <font name="Comic Sans MS"/>
+                  <foreground color="-1513240"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <vspacer id="4bc12">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                </children>
+              </grid>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <vspacer id="1afcb">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+            <maximum-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+      </vspacer>
+      <vspacer id="d6abc">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+            <maximum-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+      </vspacer>
+      <vspacer id="38e82">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+            <maximum-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+      </vspacer>
+      <vspacer id="aefc">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+            <maximum-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+      </vspacer>
+      <hspacer id="ef76a">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="20" height="-1"/>
+            <maximum-size width="20" height="-1"/>
+          </grid>
+        </constraints>
+      </hspacer>
+      <hspacer id="be8bb">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="20" height="-1"/>
+            <maximum-size width="20" height="-1"/>
+          </grid>
+        </constraints>
+      </hspacer>
+    </children>
+  </grid>
+</form>

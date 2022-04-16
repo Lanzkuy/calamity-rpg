@@ -32,7 +32,7 @@ public class Hunt {
                 playerDamage = 0;
             }
 
-            int enemyDamage = enemy.damage(Player.baseDefense);
+            int enemyDamage = enemy.damage(Player.totalDefense);
             if(enemyDamage < 0){
                 enemyDamage = 0;
             }

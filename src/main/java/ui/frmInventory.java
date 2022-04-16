@@ -25,6 +25,8 @@ public class frmInventory extends JDialog implements ActionListener {
     private JScrollPane pScrollPane;
     private JPanel pInventory;
     private JPanel pInventoryItem;
+    private JPanel consumableHeader;
+    private JPanel huntingItemHeader;
 
     public frmInventory(frmGameMenu fgm){
         super(fgm, "Inventory", ModalityType.APPLICATION_MODAL);
@@ -34,10 +36,11 @@ public class frmInventory extends JDialog implements ActionListener {
 
     private void initialize(){
         loadEquipment();
+        huntingItemHeader.setVisible(false);
+        consumableHeader.setVisible(true);
         loadInventory("Consumable");
         btnTypeConsumableOnClick();
         btnTypeHuntingItemOnClick();
-        btnExitOnClick();
 
         setContentPane(pInventory);
         setMinimumSize(pInventory.getMinimumSize());
@@ -50,6 +53,8 @@ public class frmInventory extends JDialog implements ActionListener {
 
     private void btnTypeConsumableOnClick(){
         btnTypeConsumable.addActionListener(e -> {
+            huntingItemHeader.setVisible(false);
+            consumableHeader.setVisible(true);
             loadInventory("Consumable");
         });
 
@@ -64,6 +69,8 @@ public class frmInventory extends JDialog implements ActionListener {
 
     private void btnTypeHuntingItemOnClick(){
         btnTypeHuntingItem.addActionListener(e -> {
+            consumableHeader.setVisible(false);
+            huntingItemHeader.setVisible(true);
             loadInventory("Hunting Item");
         });
 
@@ -72,15 +79,6 @@ public class frmInventory extends JDialog implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 btnTypeHuntingItem.setBackground(new Color(43, 43 ,43));
                 btnTypeConsumable.setBackground(new Color(103, 103 ,103));
-            }
-        });
-    }
-
-    private void btnExitOnClick(){
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                fgm.setEnabled(true);
             }
         });
     }
@@ -142,7 +140,7 @@ public class frmInventory extends JDialog implements ActionListener {
                 btnUseItem.setForeground(new Color(232, 232, 232));
                 btnUseItem.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                 btnUseItem.setHorizontalTextPosition(JButton.CENTER);
-                btnUseItem.setHorizontalAlignment(JButton.LEFT);
+                btnUseItem.setHorizontalAlignment(JButton.CENTER);
                 btnUseItem.setMaximumSize(new Dimension(100,20));
                 btnUseItem.setVisible(true);
                 btnUseItem.addActionListener(this);
@@ -151,6 +149,7 @@ public class frmInventory extends JDialog implements ActionListener {
                 pItem.add(lblItemName);
                 pItem.add(lblQuantity);
                 pInventoryItem.setLayout(new BoxLayout(pInventoryItem, BoxLayout.Y_AXIS));
+                pInventoryItem.add(Box.createRigidArea(new Dimension(5, 2)));
                 pInventoryItem.add(pItem);
             }
             else if(inventData.get(i).getType().equals("Hunting Item") && type.equals("Hunting Item")){
@@ -158,6 +157,7 @@ public class frmInventory extends JDialog implements ActionListener {
                 pItem.add(lblItemName);
                 pItem.add(lblQuantity);
                 pInventoryItem.setLayout(new BoxLayout(pInventoryItem, BoxLayout.Y_AXIS));
+                pInventoryItem.add(Box.createRigidArea(new Dimension(5, 2)));
                 pInventoryItem.add(pItem);
 
             }
@@ -177,7 +177,7 @@ public class frmInventory extends JDialog implements ActionListener {
 
             }
             else{
-                if(Player.health != Player.baseMaxHealth){
+                if(Player.health != Player.totalMaxHealth){
                     Player.heal(consumable.getHealValue());
                     Inventory.updateItem(consumable.getItemID(), consumable.getName(), consumable.getType(), -1);
                 }

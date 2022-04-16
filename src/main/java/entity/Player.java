@@ -22,36 +22,41 @@ public class Player{
     public static Weapon weapon;
     public static Armor armor;
     public static Pendant pendant;
+    public static int totalAttack;
+    public static int totalDefense;
+    public static int totalCriticalChance;
+    public static int totalLifesteal;
+    public static int totalMaxHealth;
 
     //Initialize the equipment
-    public Player(){
-        baseAttack = weapon != null ? baseAttack + weapon.getAdditionalAttack() : baseAttack;
-        baseDefense = armor != null ? baseDefense + armor.getAdditionalDefense() : baseDefense;
-        baseCriticalChance = pendant != null ? baseCriticalChance + pendant.getAdditionalCriticalChance() : baseCriticalChance;
-        baseLifeSteal = pendant != null ? baseLifeSteal + pendant.getAdditionalLifeSteal() : baseLifeSteal;
-        baseMaxHealth = pendant != null ? baseMaxHealth + pendant.getAdditionalMaxHealth() : baseMaxHealth;
+    public static void initializeEquipment(){
+        totalAttack = weapon != null ? baseAttack + weapon.getAdditionalAttack() : baseAttack;
+        totalDefense = armor != null ? baseDefense + armor.getAdditionalDefense() : baseDefense;
+        totalCriticalChance = pendant != null ? baseCriticalChance + pendant.getAdditionalCriticalChance() : baseCriticalChance;
+        totalLifesteal = pendant != null ? baseLifeSteal + pendant.getAdditionalLifeSteal() : baseLifeSteal;
+        totalMaxHealth = pendant != null ? baseMaxHealth + pendant.getAdditionalMaxHealth() : baseMaxHealth;
     }
 
     //To heal player health
     public static void heal(int healValue){
         health += healValue;
-        if(health >= baseMaxHealth){
-            health = baseMaxHealth;
+        if(health >= totalMaxHealth){
+            health = totalMaxHealth;
         }
     }
 
     //To give lifeSteal when attacking
     public static void lifeSteal(int damage){
-        if(baseLifeSteal > 0) {
-            int life = (baseLifeSteal/100) * damage;
+        if(totalLifesteal > 0) {
+            int life = (totalLifesteal/100) * damage;
             heal(life);
         }
     }
 
     //To calculate the total damage to the enemy
     public static int damage(int enemyDefense){
-        int totalDamage = baseAttack - (enemyDefense / 2);
-        if(rand.nextInt(100-1)+1 <= baseCriticalChance){
+        int totalDamage = totalAttack - (enemyDefense / 2);
+        if(rand.nextInt(100-1)+1 <= totalCriticalChance){
             totalDamage = totalDamage * 2;
         }
         lifeSteal(totalDamage);
@@ -73,11 +78,11 @@ public class Player{
             System.out.println("Congratulations you leveled up");
             exp = extraExp;
             level += 1;
-            maxExp += maxExp / 2;
+            maxExp += maxExp / 4;
             baseAttack += 2;
             baseDefense += 2;
             baseMaxHealth += 3;
-            baseCriticalChance += 0.4 * level;
+            baseCriticalChance += 0.1 * level;
         }
     }
 }

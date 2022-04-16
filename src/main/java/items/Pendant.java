@@ -5,13 +5,11 @@ public class Pendant extends Item{
     private int additionalLifeSteal;
     private int additionalMaxHealth;
 
-    public Pendant(String itemID, String name, String type, int price, boolean sellable,
-                   int additionalCriticalChance, int additionalLifeSteal, int additionalMaxHealth){
+    public Pendant(String itemID, String name, String type, int additionalCriticalChance,
+                   int additionalLifeSteal, int additionalMaxHealth){
         setItemID(itemID);
         setName(name);
         setType(type);
-        setPrice(price);
-        setSellable(sellable);
         setAdditionalCriticalChance(additionalCriticalChance);
         setAdditionalLifeSteal(additionalLifeSteal);
         setAdditionalMaxHealth(additionalMaxHealth);

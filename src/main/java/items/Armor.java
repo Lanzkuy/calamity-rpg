@@ -3,12 +3,10 @@ package items;
 public class Armor extends Item{
     private int additionalDefense;
 
-    public Armor(String itemID, String name, String type, int price, boolean sellable, int additionalDefense){
+    public Armor(String itemID, String name, String type, int additionalDefense){
         setItemID(itemID);
         setName(name);
         setType(type);
-        setPrice(price);
-        setSellable(sellable);
         setAdditionalDefense(additionalDefense);
     }
 

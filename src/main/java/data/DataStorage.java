@@ -19,6 +19,7 @@ public class DataStorage {
     public static ArrayList<Pendant> LP = new ArrayList<>();
     public static ArrayList<Consumable> LC = new ArrayList<>();
     public static ArrayList<HuntingItem> LHI = new ArrayList<>();
+    public static ArrayList<ShopItem> LSI = new ArrayList<>();
     public static ArrayList<Inventory> LI = new ArrayList<>();
     public static ArrayList<HuntEnemy> LHE = new ArrayList<>();
     public static ArrayList<Boss> LB = new ArrayList<>();
@@ -98,6 +99,23 @@ public class DataStorage {
         try{
             if(!itemID.equals("")){
                 for (HuntingItem hi : LHI) {
+                    if(itemID.equals(hi.getItemID())){
+                        return hi;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getHuntingItem : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get shop item by itemID
+    public static ShopItem getShopItem(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (ShopItem hi : LSI) {
                     if(itemID.equals(hi.getItemID())){
                         return hi;
                     }
@@ -194,25 +212,6 @@ public class DataStorage {
             System.err.println("Something went wrong in getAvailableDungeon : " + ex.getMessage());
         }
         return null;
-    }
-
-    //To get total dungeon in current map
-    public static int getTotalDungeonByMap(String mapID){
-        try{
-            int total = 0;
-            if(!mapID.equals("")){
-                for (Dungeon d : LD) {
-                    if(mapID.equals(d.getMapID())){
-                        total += 1;
-                        return total;
-                    }
-                }
-            }
-        }
-        catch (Exception ex){
-            System.err.println("Something went wrong in getAvailableDungeon : " + ex.getMessage());
-        }
-        return 0;
     }
 
     //To get total available dungeon in current map

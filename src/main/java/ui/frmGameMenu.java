@@ -53,22 +53,25 @@ public class frmGameMenu extends JFrame{
         btnMapOnClick();
         btnInventoryOnClick();
         btnDungeonOnClick();
+        btnShopOnClick();
+        btnBlacksmithOnClick();
     }
 
     public void reload(){
         DataSaver.savePlayerData();
+        Player.initializeEquipment();
         lblPlayerName.setText(Player.name);
         lblLevel.setText("Level " + Player.level);
         lblMoneyValue.setText("$"+Player.money);
-        lblAttackValue.setText(String.valueOf(Player.baseAttack));
-        lblDefenseValue.setText(String.valueOf(Player.baseDefense));
-        lblCriticalChanceValue.setText(Player.baseCriticalChance+"%");
-        lblLifestealValue.setText(Player.baseLifeSteal+"%");
+        lblAttackValue.setText(String.valueOf(Player.totalAttack));
+        lblDefenseValue.setText(String.valueOf(Player.totalDefense));
+        lblCriticalChanceValue.setText(Player.totalCriticalChance+"%");
+        lblLifestealValue.setText(Player.totalLifesteal+"%");
 
         healthBar.setStringPainted(true);
-        healthBar.setMaximum(Player.baseMaxHealth);
+        healthBar.setMaximum(Player.totalMaxHealth);
         healthBar.setValue(Player.health);
-        healthBar.setString(Player.health+"/"+Player.baseMaxHealth);
+        healthBar.setString(Player.health+"/"+Player.totalMaxHealth);
         expBar.setStringPainted(true);
         expBar.setMaximum(Player.maxExp);
         expBar.setValue(Player.exp);
@@ -104,13 +107,26 @@ public class frmGameMenu extends JFrame{
         btnInventory.addActionListener(e -> new frmInventory(this));
     }
 
+    private void btnShopOnClick(){
+        btnShop.addActionListener(e -> new frmShop(this));
+    }
+
+    private void btnBlacksmithOnClick(){
+        btnBlacksmith.addActionListener(e -> new frmShop(this));
+    }
+
     private void btnDungeonOnClick(){
         btnDungeon.addActionListener(e ->{
-            if(Player.health == Player.baseMaxHealth) {
-                int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to dungeon battle?", "Select an option...", JOptionPane.YES_NO_OPTION);
-                if (confirmation == 0) {
-                    Dungeon dungeon = DataStorage.getAvailableDungeon(Player.mapID);
-                    new frmDungeon(this, dungeon);
+            if(Player.health == Player.totalMaxHealth) {
+                Dungeon dungeon = DataStorage.getAvailableDungeon(Player.mapID);
+                if(dungeon != null){
+                    int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to dungeon battle?", "Select an option...", JOptionPane.YES_NO_OPTION);
+                    if (confirmation == 0) {
+                        new frmDungeon(this, dungeon);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(frmGameMenu.this, "You already beat all dungeon in this map");
                 }
             }
             else{

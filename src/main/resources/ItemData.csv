@@ -1,54 +1,54 @@
-ItemID;Name;Type;Price;Sellable;Additional Attack;Additional Defense;Additional Critical Chance;Additional Lifesteal;Additional Max Health;Heal Value
-ITM01;Smooth Leather;Hunting Item;100;TRUE;0;0;0;0;0;0
-ITM02;Beak;Hunting Item;125;TRUE;0;0;0;0;0;0
-ITM03;Centaur Bone;Hunting Item;80;TRUE;0;0;0;0;0;0
-ITM04;Strong Hair;Hunting Item;95;TRUE;0;0;0;0;0;0
-ITM05;Hard Leather;Hunting Item;150;TRUE;0;0;0;0;0;0
-ITM06;Hard Spine;Hunting Item;140;TRUE;0;0;0;0;0;0
-ITM07;Broken Sword;Hunting Item;180;TRUE;0;0;0;0;0;0
-ITM08;Burned Wing;Hunting Item;135;TRUE;0;0;0;0;0;0
-ITM09;Lava Gel;Hunting Item;160;TRUE;0;0;0;0;0;0
-ITM10;Magma Shell;Hunting Item;180;TRUE;0;0;0;0;0;0
-ITM11;Small Wing;Hunting Item;200;TRUE;0;0;0;0;0;0
-ITM12;Broken Shield;Hunting Item;250;TRUE;0;0;0;0;0;0
-ITM13;Sharp Spine;Hunting Item;190;TRUE;0;0;0;0;0;0
-ITM14;Hydra Bone;Hunting Item;225;TRUE;0;0;0;0;0;0
-ITM15;High Quality Sand;Hunting Item;320;TRUE;0;0;0;0;0;0
-ITM16;Cerberus Claw;Hunting Item;320;TRUE;0;0;0;0;0;0
-ITM17;Broken Staff;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM18;Ancient Thatch;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM19;Magma Stone;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM20;Fire Feather;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM21;Fafnir Leather;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM22;Wyvern Tooth;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM23;Griffon Wing;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM24;Jormungard Fang;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM25;Calamity Tooth;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM26;Calamity Bone;Hunting Item;0;FALSE;0;0;0;0;0;0
-ITM27;Low Potion;Hunting Item;5;TRUE;0;0;0;0;0;10
-ITM28;Medium Potion;Consumable;45;TRUE;0;0;0;0;0;30
-ITM29;High Potion;Consumable;80;TRUE;0;0;0;0;0;50
-ITM30;Offensive Potion;Consumable;150;TRUE;0;0;0;0;0;0
-ITM31;Defensive Potion;Consumable;150;TRUE;0;0;0;0;0;0
-ITM32;Basic Sword;Weapon;100;TRUE;5;0;0;0;0;0
-ITM33;Saber Sword;Weapon;500;TRUE;24;0;0;0;0;0
-ITM34;Ancient Sword;Weapon;1250;TRUE;37;0;0;0;0;0
-ITM35;Lava Sword;Weapon;3200;TRUE;70;0;0;0;0;0
-ITM36;Saint Wyvern Sword;Weapon;5000;TRUE;150;0;0;0;0;0
-ITM37;Jormungard Sword;Weapon;8000;TRUE;250;0;0;0;0;0
-ITM38;Legendary Calamity Sword;Weapon;0;FALSE;295;0;0;0;0;0
-ITM39;Basic Armor;Armor;100;TRUE;0;5;0;0;0;0
-ITM40;Buster Armor;Armor;500;TRUE;0;30;0;0;0;0
-ITM41;Ancient Armor;Armor;1250;TRUE;0;45;0;0;0;0
-ITM42;Magma Armor;Armor;3200;TRUE;0;78;0;0;0;0
-ITM43;Dragon Tunic;Armor;5000;TRUE;0;145;0;0;0;0
-ITM44;Griffon Armor;Armor;8000;TRUE;0;220;0;0;0;0
-ITM45;Legendary Calamity Armor;Armor;0;FALSE;0;295;0;0;0;0
-ITM46;Magical Ring;Pendant;500;TRUE;0;0;8;3;10;0
-ITM47;Magical Bracelet;Pendant;500;TRUE;0;0;6;5;10;0
-ITM48;Straw Ring;Pendant;1250;TRUE;0;0;12;6;25;0
-ITM49;Straw Bracelet;Pendant;1250;TRUE;0;0;10;8;25;0
-ITM50;Obsidian Necklace;Pendant;3200;TRUE;0;0;15;5;30;0
-ITM51;Magma Belt;Pendant;3200;TRUE;0;0;8;10;30;0
-ITM52;Fafnir Belt;Pendant;5000;TRUE;0;0;20;20;50;0
-ITM53;Legendary Calamity Orb;Pendant;0;FALSE;0;0;45;30;100;0
+ItemID;Name;Type;Price;Buyable;Sellable;Additional Attack;Additional Defense;Additional Critical Chance;Additional Lifesteal;Additional Max Health;Heal Value
+ITM01;Smooth Leather;Hunting Item;100;FALSE;TRUE;0;0;0;0;0;0
+ITM02;Beak;Hunting Item;125;FALSE;TRUE;0;0;0;0;0;0
+ITM03;Centaur Bone;Hunting Item;80;FALSE;TRUE;0;0;0;0;0;0
+ITM04;Strong Hair;Hunting Item;95;FALSE;TRUE;0;0;0;0;0;0
+ITM05;Hard Leather;Hunting Item;150;FALSE;TRUE;0;0;0;0;0;0
+ITM06;Hard Spine;Hunting Item;140;FALSE;TRUE;0;0;0;0;0;0
+ITM07;Broken Sword;Hunting Item;180;FALSE;TRUE;0;0;0;0;0;0
+ITM08;Burned Wing;Hunting Item;135;FALSE;TRUE;0;0;0;0;0;0
+ITM09;Lava Gel;Hunting Item;160;FALSE;TRUE;0;0;0;0;0;0
+ITM10;Magma Shell;Hunting Item;180;FALSE;TRUE;0;0;0;0;0;0
+ITM11;Small Wing;Hunting Item;200;FALSE;TRUE;0;0;0;0;0;0
+ITM12;Broken Shield;Hunting Item;250;FALSE;TRUE;0;0;0;0;0;0
+ITM13;Sharp Spine;Hunting Item;190;FALSE;TRUE;0;0;0;0;0;0
+ITM14;Hydra Bone;Hunting Item;225;FALSE;TRUE;0;0;0;0;0;0
+ITM15;High Quality Sand;Hunting Item;320;FALSE;TRUE;0;0;0;0;0;0
+ITM16;Cerberus Claw;Hunting Item;320;FALSE;TRUE;0;0;0;0;0;0
+ITM17;Broken Staff;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM18;Ancient Thatch;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM19;Magma Stone;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM20;Fire Feather;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM21;Fafnir Leather;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM22;Wyvern Tooth;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM23;Griffon Wing;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM24;Jormungard Fang;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM25;Calamity Tooth;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM26;Calamity Bone;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
+ITM27;Low Potion;Consumable;50;TRUE;TRUE;0;0;0;0;0;10
+ITM28;Medium Potion;Consumable;100;TRUE;TRUE;0;0;0;0;0;30
+ITM29;High Potion;Consumable;250;TRUE;TRUE;0;0;0;0;0;100
+ITM30;Offensive Potion;Consumable;1000;TRUE;TRUE;0;0;0;0;0;0
+ITM31;Defensive Potion;Consumable;1000;TRUE;TRUE;0;0;0;0;0;0
+ITM32;Basic Sword;Weapon;300;TRUE;TRUE;15;0;0;0;0;0
+ITM33;Saber Sword;Weapon;500;FALSE;TRUE;24;0;0;0;0;0
+ITM34;Ancient Sword;Weapon;1250;FALSE;TRUE;37;0;0;0;0;0
+ITM35;Lava Sword;Weapon;3200;FALSE;TRUE;70;0;0;0;0;0
+ITM36;Saint Wyvern Sword;Weapon;5000;FALSE;TRUE;150;0;0;0;0;0
+ITM37;Jormungard Sword;Weapon;8000;FALSE;TRUE;250;0;0;0;0;0
+ITM38;Legendary Calamity Sword;Weapon;0;FALSE;FALSE;295;0;0;0;0;0
+ITM39;Basic Armor;Armor;300;TRUE;TRUE;0;15;0;0;0;0
+ITM40;Buster Armor;Armor;500;FALSE;TRUE;0;30;0;0;0;0
+ITM41;Ancient Armor;Armor;1250;FALSE;TRUE;0;45;0;0;0;0
+ITM42;Magma Armor;Armor;3200;FALSE;TRUE;0;78;0;0;0;0
+ITM43;Dragon Tunic;Armor;5000;FALSE;TRUE;0;145;0;0;0;0
+ITM44;Griffon Armor;Armor;8000;FALSE;TRUE;0;220;0;0;0;0
+ITM45;Legendary Calamity Armor;Armor;0;FALSE;FALSE;0;295;0;0;0;0
+ITM46;Magical Ring;Pendant;500;FALSE;TRUE;0;0;8;3;10;0
+ITM47;Magical Bracelet;Pendant;500;FALSE;TRUE;0;0;6;5;10;0
+ITM48;Straw Ring;Pendant;1250;FALSE;TRUE;0;0;12;6;25;0
+ITM49;Straw Bracelet;Pendant;1250;FALSE;TRUE;0;0;10;8;25;0
+ITM50;Obsidian Necklace;Pendant;3200;FALSE;TRUE;0;0;15;5;30;0
+ITM51;Magma Belt;Pendant;3200;FALSE;TRUE;0;0;8;10;30;0
+ITM52;Fafnir Belt;Pendant;5000;FALSE;TRUE;0;0;20;20;50;0
+ITM53;Legendary Calamity Orb;Pendant;0;FALSE;FALSE;0;0;45;30;100;0

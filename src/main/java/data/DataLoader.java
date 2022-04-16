@@ -20,6 +20,7 @@ public class DataLoader {
         DataStorage.LP.clear();
         DataStorage.LC.clear();
         DataStorage.LHI.clear();
+        DataStorage.LSI.clear();
         DataStorage.LI.clear();
         DataStorage.LM.clear();
         DataStorage.LHE.clear();
@@ -45,6 +46,7 @@ public class DataLoader {
         Pendant p;
         Consumable c;
         HuntingItem hi;
+        ShopItem si;
         try{
             File file = new File("src/main/resources/ItemData.csv");
             BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
@@ -53,36 +55,34 @@ public class DataLoader {
                 String[] values = line.split(";");
                 switch (values[2]) {
                     case "Weapon" -> {
-                        w = new Weapon(values[0], values[1], values[2],
-                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                                Integer.parseInt(values[5]));
+                        w = new Weapon(values[0], values[1], values[2], Integer.parseInt(values[6]));
                         DataStorage.LW.add(w);
                     }
                     case "Armor" -> {
-                        a = new Armor(values[0], values[1], values[2],
-                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                                Integer.parseInt(values[5]));
+                        a = new Armor(values[0], values[1], values[2], Integer.parseInt(values[7]));
                         DataStorage.LA.add(a);
                     }
                     case "Pendant" -> {
                         p = new Pendant(values[0], values[1], values[2],
-                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                                Integer.parseInt(values[5]), Integer.parseInt(values[6]),
-                                Integer.parseInt(values[7]));
+                                Integer.parseInt(values[8]), Integer.parseInt(values[9]),
+                                Integer.parseInt(values[10]));
                         DataStorage.LP.add(p);
                     }
                     case "Consumable" -> {
-                        c = new Consumable(values[0], values[1], values[2],
-                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]),
-                                Integer.parseInt(values[10]));
+                        c = new Consumable(values[0], values[1], values[2], Integer.parseInt(values[11]));
                         DataStorage.LC.add(c);
                     }
                     case "Hunting Item" -> {
-                        hi = new HuntingItem(values[0], values[1], values[2],
-                                Integer.parseInt(values[3]), Boolean.parseBoolean(values[4]));
+                        hi = new HuntingItem(values[0], values[1], values[2]);
                         DataStorage.LHI.add(hi);
                     }
                     default -> System.out.println("This type of item is illegal : " + values[2]);
+                }
+
+                if(Boolean.parseBoolean(values[4]) || Boolean.parseBoolean(values[5])){
+                    si = new ShopItem(values[0], values[1], values[2], Integer.parseInt(values[3]),
+                            Boolean.parseBoolean(values[4]), Boolean.parseBoolean(values[5]));
+                    DataStorage.LSI.add(si);
                 }
             }
         }

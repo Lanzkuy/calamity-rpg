@@ -6,6 +6,7 @@ public abstract class Item {
     private String name;
     private String type;
     private int price;
+    private boolean buyable;
     private boolean sellable;
 
     //Getter Setter
@@ -39,6 +40,14 @@ public abstract class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean isBuyable() {
+        return buyable;
+    }
+
+    public void setBuyable(boolean buyable) {
+        this.buyable = buyable;
     }
 
     public boolean isSellable() {

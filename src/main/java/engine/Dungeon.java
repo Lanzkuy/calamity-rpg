@@ -35,12 +35,12 @@ public class Dungeon {
             playerDamage = 0;
         }
 
-        int bossDamage = boss.damage(Player.baseDefense);
+        int bossDamage = boss.damage(Player.totalDefense);
         if(bossDamage < 0){
             bossDamage = 0;
         }
 
-        int bossSpecialAttackDamage = boss.specialAttack(Player.baseDefense);
+        int bossSpecialAttackDamage = boss.specialAttack(Player.totalDefense);
         if(bossSpecialAttackDamage < 0){
             bossSpecialAttackDamage = 0;
         }
@@ -108,7 +108,7 @@ public class Dungeon {
         else if(playerMove.equals("Heal")){
             if(bossMove.equals("Attack")){
                 if (rand.nextInt(100 - 1) + 1 <= 30) {
-                    int healTotal = Player.baseMaxHealth - (Player.baseMaxHealth * 25 / 100);
+                    int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);
                     Player.heal(healTotal);
                     Player.getDamage(bossDamage);
                     result.append("You cast heal spell you get ").append(healTotal).append(" heal\n");
@@ -123,7 +123,7 @@ public class Dungeon {
             }
             else if(bossMove.equals("Block")){
                 if (rand.nextInt(100 - 1) + 1 <= 30) {
-                    int healTotal = Player.baseMaxHealth - (Player.baseMaxHealth * 25 / 100);
+                    int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);
                     Player.heal(healTotal);
                     result.append(boss.getName()).append(" make a stand\n");
                     result.append("You cast heal spell you get ").append(healTotal).append(" heal\n");
@@ -135,7 +135,7 @@ public class Dungeon {
             }
             else if(bossMove.equals("Special Attack")){
                 if (rand.nextInt(100 - 1) + 1 <= 30) {
-                    int healTotal = Player.baseMaxHealth - (Player.baseMaxHealth * 25 / 100);
+                    int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);
                     Player.heal(healTotal);
                     Player.getDamage(bossSpecialAttackDamage);
                     result.append("You cast heal spell you get ").append(healTotal).append(" heal\n");
