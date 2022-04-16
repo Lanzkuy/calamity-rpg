@@ -73,7 +73,7 @@ public class Player{
             System.out.println("Congratulations you leveled up");
             exp = extraExp;
             level += 1;
-            maxExp += maxExp + (maxExp * 2) / 4;
+            maxExp += maxExp / 2;
             baseAttack += 2;
             baseDefense += 2;
             baseMaxHealth += 3;

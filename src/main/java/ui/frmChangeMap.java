@@ -27,7 +27,7 @@ public class frmChangeMap extends JDialog implements ActionListener{
     private void initialize(){
         lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
         loadButton();
-        btnExit();
+        btnExitOnClick();
 
         setContentPane(pChangeMap);
         setMinimumSize(pChangeMap.getMinimumSize());
@@ -38,7 +38,7 @@ public class frmChangeMap extends JDialog implements ActionListener{
         pack();
     }
 
-    private void btnExit(){
+    private void btnExitOnClick(){
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -54,9 +54,9 @@ public class frmChangeMap extends JDialog implements ActionListener{
             JButton button = new JButton();
             button.setName(mapData.get(i).getMapID());
             button.setText(mapData.get(i).getMapName());
-            button.setSize(new Dimension(258, 54));
             button.setBackground(new Color(232, 232, 232));
             button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+            button.setSize(new Dimension(258, 54));
             button.setVisible(true);
             button.addActionListener(this);
 
@@ -73,9 +73,7 @@ public class frmChangeMap extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
-        if(button.getName().equals(Player.mapID)){
-            Player.mapID = button.getName();
-            lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
-        }
+        Player.mapID = button.getName();
+        lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
     }
 }

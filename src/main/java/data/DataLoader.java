@@ -1,6 +1,8 @@
 package data;
 
+import engine.Dungeon;
 import engine.Inventory;
+import entity.Boss;
 import entity.HuntEnemy;
 import entity.Map;
 import entity.Player;
@@ -21,6 +23,8 @@ public class DataLoader {
         DataStorage.LI.clear();
         DataStorage.LM.clear();
         DataStorage.LHE.clear();
+        DataStorage.LB.clear();
+        DataStorage.LD.clear();
     }
 
     //Load all data
@@ -29,17 +33,18 @@ public class DataLoader {
         loadInventoryData();
         loadMapData();
         loadEnemyData();
+        loadDungeonData();
         loadPlayerData();
     }
 
     //Load item data to various type
     public static void loadItemData(){
         String line;
-        Weapon w = null;
-        Armor a = null;
-        Pendant p = null;
-        Consumable c = null;
-        HuntingItem hi = null;
+        Weapon w;
+        Armor a;
+        Pendant p;
+        Consumable c;
+        HuntingItem hi;
         try{
             File file = new File("src/main/resources/ItemData.csv");
             BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
@@ -128,20 +133,51 @@ public class DataLoader {
     public static void loadEnemyData(){
         String line;
         HuntEnemy ce;
+        Boss b;
         try{
             File file = new File("src/main/resources/EnemyData.csv");
             BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
             br.readLine();
             while ((line = br.readLine()) != null){
                 String[] values = line.split(";");
-                ce = new HuntEnemy(values[0], values[1], values[2], values[3], values[4],
-                        Integer.parseInt(values[5]), Integer.parseInt(values[6]), Integer.parseInt(values[7]),
-                        Integer.parseInt(values[8]), (int) Float.parseFloat(values[9]));
-                DataStorage.LHE.add(ce);
+                switch (values[3]) {
+                    case "Crook" -> {
+                        ce = new HuntEnemy(values[0], values[1], values[2], values[3], values[4],
+                                Integer.parseInt(values[5]), Integer.parseInt(values[6]), Integer.parseInt(values[7]),
+                                Integer.parseInt(values[8]), (int) Float.parseFloat(values[9]));
+                        DataStorage.LHE.add(ce);
+                    }
+                    case "Boss" -> {
+                        b = new Boss(values[0], values[1], values[2], values[3], values[4],
+                                Integer.parseInt(values[5]), Integer.parseInt(values[6]), Integer.parseInt(values[7]),
+                                Integer.parseInt(values[8]), (int) Float.parseFloat(values[9]));
+                        DataStorage.LB.add(b);
+                    }
+                    default -> System.out.println("This type of enemy is illegal : " + values[2]);
+                }
             }
         }
         catch (Exception ex){
             System.err.println("Something went wrong in loadEnemyData : " + ex);
+        }
+    }
+
+    //Load map data
+    public static void loadDungeonData(){
+        String line;
+        Dungeon d;
+        try{
+            File file = new File("src/main/resources/DungeonData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                d = new Dungeon(values[0], values[1], values[2], values[3]);
+                DataStorage.LD.add(d);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadDungeonData : " + ex);
         }
     }
 

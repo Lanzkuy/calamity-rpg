@@ -1,6 +1,8 @@
 package data;
 
+import engine.Dungeon;
 import engine.Inventory;
+import entity.Boss;
 import entity.HuntEnemy;
 import entity.Map;
 import entity.Player;
@@ -19,7 +21,9 @@ public class DataStorage {
     public static ArrayList<HuntingItem> LHI = new ArrayList<>();
     public static ArrayList<Inventory> LI = new ArrayList<>();
     public static ArrayList<HuntEnemy> LHE = new ArrayList<>();
+    public static ArrayList<Boss> LB = new ArrayList<>();
     public static ArrayList<Map> LM = new ArrayList<>();
+    public static ArrayList<Dungeon> LD = new ArrayList<>();
 
     //To get weapon by itemID
     public static Weapon getWeapon(String itemID){
@@ -133,7 +137,7 @@ public class DataStorage {
                 while (i < LHE.size()) {
                     if(he.getMapID().equals(Player.mapID) && he.getType().equals("Crook")){
                         if(he.getEnemyID().equals(LHE.get(i).getEnemyID())){
-                            he.setLevel(rand.nextInt(4-1)+1);
+                            he.setLevel(rand.nextInt(Player.level-5-1)+1);
                             if(he.getLevel()>1){
                                 he.setBaseAttack((he.getBaseAttack() + (2 * he.getLevel())));
                                 he.setBaseDefense((he.getBaseDefense() + (2 * he.getLevel())));
@@ -153,5 +157,82 @@ public class DataStorage {
             System.err.println("Something went wrong in getRandomHuntEnemy : " + ex.getMessage());
         }
         return null;
+    }
+
+    //To get boss enemy by enemyID
+    public static Boss getBossEnemy(String enemyID){
+        try{
+            if(!enemyID.equals("")){
+                for (Boss b : LB) {
+                    if(enemyID.equals(b.getEnemyID())){
+                        b.setHealth(b.getBaseMaxHealth());
+                        return b;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getBossEnemy : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get available dungeon in current map
+    public static Dungeon getAvailableDungeon(String mapID){
+        try{
+            if(!mapID.equals("")){
+                for (Dungeon d : LD) {
+                    if(mapID.equals(d.getMapID())){
+                        if(d.getStatus().equals("Available")){
+                            return d;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getAvailableDungeon : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get total dungeon in current map
+    public static int getTotalDungeonByMap(String mapID){
+        try{
+            int total = 0;
+            if(!mapID.equals("")){
+                for (Dungeon d : LD) {
+                    if(mapID.equals(d.getMapID())){
+                        total += 1;
+                        return total;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getAvailableDungeon : " + ex.getMessage());
+        }
+        return 0;
+    }
+
+    //To get total available dungeon in current map
+    public static int getTotalAvailableDungeonByMap(String mapID){
+        try{
+            int total = 0;
+            if(!mapID.equals("")){
+                for (Dungeon d : LD) {
+                    if(mapID.equals(d.getMapID())){
+                        if(d.getStatus().equals("Available")){
+                            total += 1;
+                            return total;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getAvailableDungeon : " + ex.getMessage());
+        }
+        return 0;
     }
 }

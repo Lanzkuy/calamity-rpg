@@ -1,5 +1,9 @@
 package entity;
 
+import data.DataSaver;
+import data.DataStorage;
+import engine.Dungeon;
+
 public class Map {
     private String mapID;
     private String mapName;
@@ -9,6 +13,22 @@ public class Map {
         setMapID(mapID);
         setMapName(mapName);
         setStatus(status);
+    }
+    //To update map status
+    public static void openNewMap(String mapID){
+        try{
+            for (int i = 0; i< DataStorage.LM.size(); i++){
+                if(DataStorage.LM.get(i).getMapID().equals(mapID)){
+                    int newMapIndex = i+1;
+                    Map m = DataStorage.LM.get(newMapIndex);
+                    DataStorage.LM.set(newMapIndex, new Map(m.getMapID(), m.getMapName(), "Unlock"));
+                    DataSaver.saveMapData();
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in updateItem: " + ex);
+        }
     }
 
     //Getter Setter

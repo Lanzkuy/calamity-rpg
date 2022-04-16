@@ -3,6 +3,7 @@ package ui;
 import data.DataLoader;
 import data.DataSaver;
 import data.DataStorage;
+import engine.Dungeon;
 import engine.Hunt;
 import entity.HuntEnemy;
 import entity.Player;
@@ -51,6 +52,7 @@ public class frmGameMenu extends JFrame{
         btnHuntOnClick();
         btnMapOnClick();
         btnInventoryOnClick();
+        btnDungeonOnClick();
     }
 
     public void reload(){
@@ -100,6 +102,21 @@ public class frmGameMenu extends JFrame{
 
     private void btnInventoryOnClick(){
         btnInventory.addActionListener(e -> new frmInventory(this));
+    }
+
+    private void btnDungeonOnClick(){
+        btnDungeon.addActionListener(e ->{
+            if(Player.health == Player.baseMaxHealth) {
+                int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to dungeon battle?", "Select an option...", JOptionPane.YES_NO_OPTION);
+                if (confirmation == 0) {
+                    Dungeon dungeon = DataStorage.getAvailableDungeon(Player.mapID);
+                    new frmDungeon(this, dungeon);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(frmGameMenu.this, "Your health must be full to enter dungeon");
+            }
+        });
     }
 
     public static void main(String[] args) {

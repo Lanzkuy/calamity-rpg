@@ -1,5 +1,10 @@
 ItemID;Name;Type;Quantity
-ITM04;Strong Hair;Hunting Item;1;
-ITM03;Centaur Bone;Hunting Item;3;
-ITM01;Smooth Leather;Hunting Item;1;
-ITM02;Beak;Hunting Item;1;
+ITM04;Strong Hair;Hunting Item;98;
+ITM03;Centaur Bone;Hunting Item;83;
+ITM01;Smooth Leather;Hunting Item;71;
+ITM02;Beak;Hunting Item;102;
+ITM28;Medium Potion;Consumable;50;
+ITM17;Broken Staff;Hunting Item;6;
+ITM07;Broken Sword;Hunting Item;7;
+ITM06;Hard Spine;Hunting Item;5;
+ITM05;Hard Leather;Hunting Item;3;

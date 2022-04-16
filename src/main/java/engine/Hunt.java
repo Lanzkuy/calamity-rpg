@@ -12,8 +12,8 @@ import java.util.Random;
 public class Hunt {
     public static String huntBattle(HuntEnemy enemy) {
         Random rand = new Random();
-        StringBuilder logOutput = new StringBuilder();
         int moneyDrop = rand.nextInt(50 - 1) + 1;
+        StringBuilder logOutput = new StringBuilder();
 
         try{
             //Enemy encounter
@@ -65,8 +65,8 @@ public class Hunt {
                                 append(enemy.getName()).append("\n").
                                 append("You get ").append(exp).
                                 append(" exp, $").append(moneyDrop).
-                                append(" money\n").
-                                append("and \n");
+                                append(" money\n").append("and ").
+                                append(hi.getName()).append("\n");
                     }
                     else{
                         logOutput.append("You win agains ").

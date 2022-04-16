@@ -5,12 +5,13 @@ import data.DataStorage;
 import engine.Inventory;
 import entity.Player;
 import items.Consumable;
-import items.Item;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -38,7 +39,6 @@ public class frmInventory extends JDialog implements ActionListener {
         btnTypeHuntingItemOnClick();
         btnExitOnClick();
 
-        setTitle("Calamity RPG");
         setContentPane(pInventory);
         setMinimumSize(pInventory.getMinimumSize());
         setMaximumSize(pInventory.getMaximumSize());
@@ -52,11 +52,27 @@ public class frmInventory extends JDialog implements ActionListener {
         btnTypeConsumable.addActionListener(e -> {
             loadInventory("Consumable");
         });
+
+        btnTypeConsumable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnTypeConsumable.setBackground(new Color(43, 43 ,43));
+                btnTypeHuntingItem.setBackground(new Color(103, 103 ,103));
+            }
+        });
     }
 
     private void btnTypeHuntingItemOnClick(){
         btnTypeHuntingItem.addActionListener(e -> {
             loadInventory("Hunting Item");
+        });
+
+        btnTypeHuntingItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btnTypeHuntingItem.setBackground(new Color(43, 43 ,43));
+                btnTypeConsumable.setBackground(new Color(103, 103 ,103));
+            }
         });
     }
 
@@ -97,7 +113,6 @@ public class frmInventory extends JDialog implements ActionListener {
         ArrayList<Inventory> inventData = DataStorage.LI;
         for (int i = 0; i<inventData.size(); i++){
             JPanel pItem = new JPanel();
-            pItem.setLayout(new GridLayout(0, 3));
             pItem.setBackground(new Color(189, 189, 189));
             pItem.setMaximumSize(new Dimension(500,20));
             pItem.setVisible(true);
@@ -106,28 +121,30 @@ public class frmInventory extends JDialog implements ActionListener {
             lblItemName.setText(inventData.get(i).getName());
             lblItemName.setForeground(new Color(43, 43, 43));
             lblItemName.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-            lblItemName.setVisible(true);
             lblItemName.setHorizontalAlignment(JLabel.CENTER);
             lblItemName.setMaximumSize(new Dimension(100,20));
+            lblItemName.setVisible(true);
 
             JLabel lblQuantity = new JLabel();
             lblQuantity.setText(String.valueOf(inventData.get(i).getQuantity()));
             lblQuantity.setForeground(new Color(43, 43, 43));
             lblQuantity.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-            lblQuantity.setVisible(true);
-            lblQuantity.setHorizontalAlignment(JLabel.RIGHT);
+            lblQuantity.setHorizontalAlignment(JLabel.CENTER);
             lblQuantity.setMaximumSize(new Dimension(100,20));
+            lblQuantity.setVisible(true);
 
             if(inventData.get(i).getType().equals("Consumable") && type.equals("Consumable")){
+                pItem.setLayout(new GridLayout(0, 3));
                 JButton btnUseItem = new JButton();
                 btnUseItem.setName(inventData.get(i).getItemID());
-                btnUseItem.setText("Use");
+                btnUseItem.setText("USE");
+                btnUseItem.setBackground(new Color(55, 55 , 55));
                 btnUseItem.setForeground(new Color(232, 232, 232));
                 btnUseItem.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-                btnUseItem.setVisible(true);
+                btnUseItem.setHorizontalTextPosition(JButton.CENTER);
                 btnUseItem.setHorizontalAlignment(JButton.LEFT);
                 btnUseItem.setMaximumSize(new Dimension(100,20));
-                btnUseItem.setBackground(new Color(55, 55 , 55));
+                btnUseItem.setVisible(true);
                 btnUseItem.addActionListener(this);
 
                 pItem.add(btnUseItem);
@@ -137,6 +154,7 @@ public class frmInventory extends JDialog implements ActionListener {
                 pInventoryItem.add(pItem);
             }
             else if(inventData.get(i).getType().equals("Hunting Item") && type.equals("Hunting Item")){
+                pItem.setLayout(new GridLayout(0, 2));
                 pItem.add(lblItemName);
                 pItem.add(lblQuantity);
                 pInventoryItem.setLayout(new BoxLayout(pInventoryItem, BoxLayout.Y_AXIS));
@@ -159,9 +177,11 @@ public class frmInventory extends JDialog implements ActionListener {
 
             }
             else{
-                Player.heal(consumable.getHealValue());
+                if(Player.health != Player.baseMaxHealth){
+                    Player.heal(consumable.getHealValue());
+                    Inventory.updateItem(consumable.getItemID(), consumable.getName(), consumable.getType(), -1);
+                }
             }
-            Inventory.updateItem(consumable.getItemID(), consumable.getName(), consumable.getType(), -1);
             DataSaver.saveInventoryData();
             loadInventory("Consumable");
             fgm.reload();

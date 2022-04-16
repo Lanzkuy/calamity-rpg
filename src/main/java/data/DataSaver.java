@@ -51,7 +51,52 @@ public class DataSaver {
             pw.close();
         }
         catch (Exception ex){
-            System.err.println("Something went wrong in savePlayerData : " + ex);
+            System.err.println("Something went wrong in saveInventoryData : " + ex);
+        }
+    }
+
+    public static void saveMapData(){
+        try{
+            File file = new File("src/main/resources/MapData.csv");
+            PrintWriter pw = new PrintWriter(file);
+            StringBuilder sb = new StringBuilder();
+            sb.append("MapID;MapName;Status");
+            sb.append("\n");
+            for(int i = 0; i<DataStorage.LM.size(); i++){
+                sb.append(DataStorage.LM.get(i).getMapID()).append(";");
+                sb.append(DataStorage.LM.get(i).getMapName()).append(";");
+                sb.append(DataStorage.LM.get(i).getStatus()).append(";");
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.flush();
+            pw.close();
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in saveMapData : " + ex);
+        }
+    }
+
+    public static void saveDungeonData(){
+        try{
+            File file = new File("src/main/resources/DungeonData.csv");
+            PrintWriter pw = new PrintWriter(file);
+            StringBuilder sb = new StringBuilder();
+            sb.append("DungeonID;MapID;EnemyID;Status");
+            sb.append("\n");
+            for(int i = 0; i<DataStorage.LD.size(); i++){
+                sb.append(DataStorage.LD.get(i).getDungeonID()).append(";");
+                sb.append(DataStorage.LD.get(i).getMapID()).append(";");
+                sb.append(DataStorage.LD.get(i).getBossID()).append(";");
+                sb.append(DataStorage.LD.get(i).getStatus()).append(";");
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.flush();
+            pw.close();
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in saveDungeonData : " + ex);
         }
     }
 }
