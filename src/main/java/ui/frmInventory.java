@@ -1,5 +1,6 @@
 package ui;
 
+import data.DataSaver;
 import data.DataStorage;
 import engine.Inventory;
 import entity.Player;
@@ -31,6 +32,7 @@ public class frmInventory extends JDialog implements ActionListener {
     }
 
     private void initialize(){
+        loadEquipment();
         loadInventory("Consumable");
         btnTypeConsumableOnClick();
         btnTypeHuntingItemOnClick();
@@ -65,6 +67,29 @@ public class frmInventory extends JDialog implements ActionListener {
                 fgm.setEnabled(true);
             }
         });
+    }
+
+    private void loadEquipment(){
+        if(Player.weapon != null){
+            lblWeapon.setText(Player.weapon.getName());
+        }
+        else{
+            lblWeapon.setText("-");
+        }
+
+        if(Player.armor != null){
+            lblArmor.setText(Player.armor.getName());
+        }
+        else{
+            lblArmor.setText("-");
+        }
+
+        if(Player.pendant != null){
+            lblPendant.setText(Player.pendant.getName());
+        }
+        else{
+            lblPendant.setText("-");
+        }
     }
 
     private void loadInventory(String type){
@@ -137,8 +162,9 @@ public class frmInventory extends JDialog implements ActionListener {
                 Player.heal(consumable.getHealValue());
             }
             Inventory.updateItem(consumable.getItemID(), consumable.getName(), consumable.getType(), -1);
-            fgm.reload();
+            DataSaver.saveInventoryData();
             loadInventory("Consumable");
+            fgm.reload();
         }
     }
 }

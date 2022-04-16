@@ -1,6 +1,7 @@
 package ui;
 
 import data.DataLoader;
+import data.DataSaver;
 import data.DataStorage;
 import engine.Hunt;
 import entity.HuntEnemy;
@@ -42,6 +43,7 @@ public class frmGameMenu extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         pack();
+
         DataLoader.clearData();
         DataLoader.loadData();
         reload();
@@ -52,6 +54,7 @@ public class frmGameMenu extends JFrame{
     }
 
     public void reload(){
+        DataSaver.savePlayerData();
         lblPlayerName.setText(Player.name);
         lblLevel.setText("Level " + Player.level);
         lblMoneyValue.setText("$"+Player.money);
@@ -83,9 +86,10 @@ public class frmGameMenu extends JFrame{
                     pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
                 }
                 pScrollPane.getViewport().add(pLogText);
-                reload();
+
                 DataLoader.clearData();
                 DataLoader.loadData();
+                reload();
             }
         });
     }

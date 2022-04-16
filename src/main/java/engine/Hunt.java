@@ -1,9 +1,12 @@
 package engine;
 
 import data.DataSaver;
+import data.DataStorage;
 import entity.HuntEnemy;
 import entity.Player;
+import items.HuntingItem;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Hunt {
@@ -55,6 +58,9 @@ public class Hunt {
 
                     //Item drop RNG
                     if (rand.nextInt(100 - 1) + 1 <= 50) {
+                        HuntingItem hi = DataStorage.getHuntingItem(enemy.getItemDropID());
+                        Inventory.insertItem(Objects.requireNonNull(hi).getItemID(), hi.getType(), 1);
+                        DataSaver.saveInventoryData();
                         logOutput.append("You win agains ").
                                 append(enemy.getName()).append("\n").
                                 append("You get ").append(exp).

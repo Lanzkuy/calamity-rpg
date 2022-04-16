@@ -31,4 +31,27 @@ public class DataSaver {
             System.err.println("Something went wrong in savePlayerData : " + ex);
         }
     }
+
+    public static void saveInventoryData(){
+        try{
+            File file = new File("src/main/resources/InventoryData.csv");
+            PrintWriter pw = new PrintWriter(file);
+            StringBuilder sb = new StringBuilder();
+            sb.append("ItemID;Name;Type;Quantity");
+            sb.append("\n");
+            for(int i = 0; i<DataStorage.LI.size(); i++){
+                sb.append(DataStorage.LI.get(i).getItemID()).append(";");
+                sb.append(DataStorage.LI.get(i).getName()).append(";");
+                sb.append(DataStorage.LI.get(i).getType()).append(";");
+                sb.append(DataStorage.LI.get(i).getQuantity()).append(";");
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.flush();
+            pw.close();
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in savePlayerData : " + ex);
+        }
+    }
 }

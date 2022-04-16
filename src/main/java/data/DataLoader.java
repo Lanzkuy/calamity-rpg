@@ -155,9 +155,9 @@ public class DataLoader {
 
                 String[] values = br.readLine().split(";");
                 Player.mapID = values[0];
-                Player.weapon = null;
-                Player.armor = null;
-                Player.pendant = null;
+                Player.weapon = DataStorage.getWeapon(values[1]);
+                Player.armor = DataStorage.getArmor(values[2]);
+                Player.pendant = DataStorage.getPendant(values[3]);
                 Player.name = values[4];
                 Player.level = Integer.parseInt(values[5]);
                 Player.exp = Integer.parseInt(values[6]);
