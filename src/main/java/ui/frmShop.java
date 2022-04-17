@@ -94,7 +94,6 @@ public class frmShop extends JDialog implements ActionListener {
                 lblItemName.setForeground(new Color(43, 43, 43));
                 lblItemName.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                 lblItemName.setHorizontalAlignment(JLabel.CENTER);
-                lblItemName.setMaximumSize(new Dimension(100, 20));
                 lblItemName.setVisible(true);
 
                 JLabel lblPrice = new JLabel();
@@ -102,7 +101,6 @@ public class frmShop extends JDialog implements ActionListener {
                 lblPrice.setForeground(new Color(43, 43, 43));
                 lblPrice.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                 lblPrice.setHorizontalAlignment(JLabel.CENTER);
-                lblPrice.setMaximumSize(new Dimension(100, 20));
                 lblPrice.setVisible(true);
 
                 JButton btnUseItem = new JButton();
@@ -112,7 +110,6 @@ public class frmShop extends JDialog implements ActionListener {
                 btnUseItem.setForeground(new Color(232, 232, 232));
                 btnUseItem.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                 btnUseItem.setHorizontalAlignment(JButton.CENTER);
-                btnUseItem.setMaximumSize(new Dimension(100, 20));
                 btnUseItem.setVisible(true);
                 btnUseItem.addActionListener(this);
 
@@ -145,7 +142,6 @@ public class frmShop extends JDialog implements ActionListener {
                     lblItemName.setForeground(new Color(43, 43, 43));
                     lblItemName.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
                     lblItemName.setHorizontalAlignment(JLabel.CENTER);
-                    lblItemName.setMaximumSize(new Dimension(100, 20));
                     lblItemName.setVisible(true);
 
                     JLabel lblPrice = new JLabel();
@@ -153,7 +149,6 @@ public class frmShop extends JDialog implements ActionListener {
                     lblPrice.setForeground(new Color(43, 43, 43));
                     lblPrice.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
                     lblPrice.setHorizontalAlignment(JLabel.CENTER);
-                    lblPrice.setMaximumSize(new Dimension(100, 20));
                     lblPrice.setVisible(true);
 
                     JLabel lblQuantity = new JLabel();
@@ -161,7 +156,6 @@ public class frmShop extends JDialog implements ActionListener {
                     lblQuantity.setForeground(new Color(43, 43, 43));
                     lblQuantity.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
                     lblQuantity.setHorizontalAlignment(JLabel.CENTER);
-                    lblQuantity.setMaximumSize(new Dimension(100, 20));
                     lblQuantity.setVisible(true);
 
                     JButton btnUseItem = new JButton();
@@ -171,7 +165,6 @@ public class frmShop extends JDialog implements ActionListener {
                     btnUseItem.setForeground(new Color(232, 232, 232));
                     btnUseItem.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
                     btnUseItem.setHorizontalAlignment(JButton.CENTER);
-                    btnUseItem.setMaximumSize(new Dimension(100, 20));
                     btnUseItem.setVisible(true);
                     btnUseItem.addActionListener(this);
 
@@ -219,7 +212,7 @@ public class frmShop extends JDialog implements ActionListener {
             }
             else{
                 Player.money += si.getPrice();
-                Inventory.updateItem(si.getItemID(), si.getName(), si.getType(), -1);
+                Inventory.updateItem(si.getItemID(), -1);
                 loadSellItem();
             }
             DataSaver.saveInventoryData();

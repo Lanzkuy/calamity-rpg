@@ -27,7 +27,7 @@ public class Inventory {
                         DataStorage.LI.add(new Inventory(c.getItemID(), c.getName(), c.getType(), quantity));
                     }
                     else{
-                        updateItem(c.getItemID(), c.getName(), c.getType(), quantity);
+                        updateItem(c.getItemID(), quantity);
                     }
                 }
             }
@@ -38,7 +38,7 @@ public class Inventory {
                         DataStorage.LI.add(new Inventory(hi.getItemID(), hi.getName(), hi.getType(), quantity));
                     }
                     else{
-                        updateItem(hi.getItemID(), hi.getName(), hi.getType(), quantity);
+                        updateItem(hi.getItemID(), quantity);
                     }
                 }
             }
@@ -52,11 +52,12 @@ public class Inventory {
     }
 
     //To update exist item in inventory
-    public static void updateItem(String itemID, String name, String type, int quantity){
+    public static void updateItem(String itemID, int quantity){
         try{
             for (int i = 0; i<DataStorage.LI.size(); i++){
                 if(DataStorage.LI.get(i).getItemID().equals(itemID)){
-                    DataStorage.LI.set(i, new Inventory(itemID, name, type, DataStorage.LI.get(i).getQuantity() + quantity));
+                    DataStorage.LI.set(i, new Inventory(itemID, DataStorage.LI.get(i).getName(),
+                            DataStorage.LI.get(i).getType(), DataStorage.LI.get(i).getQuantity() + quantity));
                     if(DataStorage.LI.get(i).getQuantity() <= 0){
                         deleteItem(DataStorage.LI.get(i).getItemID());
                     }

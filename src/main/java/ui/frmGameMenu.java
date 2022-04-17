@@ -112,7 +112,7 @@ public class frmGameMenu extends JFrame{
     }
 
     private void btnBlacksmithOnClick(){
-        btnBlacksmith.addActionListener(e -> new frmShop(this));
+        btnBlacksmith.addActionListener(e -> new frmBlacksmith(this));
     }
 
     private void btnDungeonOnClick(){

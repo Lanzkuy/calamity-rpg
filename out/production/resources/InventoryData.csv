@@ -1,10 +1,8 @@
 ItemID;Name;Type;Quantity
-ITM04;Strong Hair;Hunting Item;59;
-ITM03;Centaur Bone;Hunting Item;92;
-ITM01;Smooth Leather;Hunting Item;82;
-ITM02;Beak;Hunting Item;117;
-ITM17;Broken Staff;Hunting Item;6;
-ITM07;Broken Sword;Hunting Item;14;
-ITM06;Hard Spine;Hunting Item;20;
-ITM05;Hard Leather;Hunting Item;17;
-ITM29;High Potion;Consumable;21;
+ITM19;Magma Stone;Hunting Item;3;
+ITM20;Fire Feather;Hunting Item;3;
+ITM11;Small Wing;Hunting Item;19;
+ITM12;Broken Shield;Hunting Item;14;
+ITM21;Fafnir Leather;Hunting Item;3;
+ITM22;Wyvern Tooth;Hunting Item;3;
+ITM29;High Potion;Consumable;8;

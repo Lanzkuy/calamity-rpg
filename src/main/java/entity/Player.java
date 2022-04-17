@@ -81,7 +81,7 @@ public class Player{
             maxExp += maxExp / 4;
             baseAttack += 2;
             baseDefense += 2;
-            baseMaxHealth += 3;
+            baseMaxHealth += 5;
             baseCriticalChance += 0.1 * level;
         }
     }

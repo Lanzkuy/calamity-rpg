@@ -120,7 +120,6 @@ public class frmInventory extends JDialog implements ActionListener {
             lblItemName.setForeground(new Color(43, 43, 43));
             lblItemName.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             lblItemName.setHorizontalAlignment(JLabel.CENTER);
-            lblItemName.setMaximumSize(new Dimension(100,20));
             lblItemName.setVisible(true);
 
             JLabel lblQuantity = new JLabel();
@@ -128,7 +127,6 @@ public class frmInventory extends JDialog implements ActionListener {
             lblQuantity.setForeground(new Color(43, 43, 43));
             lblQuantity.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             lblQuantity.setHorizontalAlignment(JLabel.CENTER);
-            lblQuantity.setMaximumSize(new Dimension(100,20));
             lblQuantity.setVisible(true);
 
             if(inventData.get(i).getType().equals("Consumable") && type.equals("Consumable")){
@@ -141,7 +139,6 @@ public class frmInventory extends JDialog implements ActionListener {
                 btnUseItem.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
                 btnUseItem.setHorizontalTextPosition(JButton.CENTER);
                 btnUseItem.setHorizontalAlignment(JButton.CENTER);
-                btnUseItem.setMaximumSize(new Dimension(100,20));
                 btnUseItem.setVisible(true);
                 btnUseItem.addActionListener(this);
 
@@ -179,7 +176,7 @@ public class frmInventory extends JDialog implements ActionListener {
             else{
                 if(Player.health != Player.totalMaxHealth){
                     Player.heal(consumable.getHealValue());
-                    Inventory.updateItem(consumable.getItemID(), consumable.getName(), consumable.getType(), -1);
+                    Inventory.updateItem(consumable.getItemID(), -1);
                 }
             }
             DataSaver.saveInventoryData();

@@ -1,5 +1,6 @@
 package data;
 
+import engine.Blacksmith;
 import engine.Dungeon;
 import engine.Inventory;
 import entity.Boss;
@@ -22,6 +23,7 @@ public class DataLoader {
         DataStorage.LHI.clear();
         DataStorage.LSI.clear();
         DataStorage.LI.clear();
+        DataStorage.LBS.clear();
         DataStorage.LM.clear();
         DataStorage.LHE.clear();
         DataStorage.LB.clear();
@@ -32,6 +34,7 @@ public class DataLoader {
     public static void loadData(){
         loadItemData();
         loadInventoryData();
+        loadBlacksmithData();
         loadMapData();
         loadEnemyData();
         loadDungeonData();
@@ -103,6 +106,27 @@ public class DataLoader {
                 String[] values = line.split(";");
                 i = new Inventory(values[0], values[1], values[2], Integer.parseInt(values[3]));
                 DataStorage.LI.add(i);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadInventoryData : " + ex);
+        }
+    }
+
+    //Load blacksmith data
+    public static void loadBlacksmithData(){
+        String line;
+        Blacksmith b;
+        try{
+            File file = new File("src/main/resources/BlacksmithData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+            br.readLine();
+            while ((line = br.readLine()) != null){
+                String[] values = line.split(";");
+                b = new Blacksmith(values[0], values[1], values[2], values[4],
+                        values[6], Integer.parseInt(values[3]), Integer.parseInt(values[5]),
+                        Integer.parseInt(values[7]), Integer.parseInt(values[8]));
+                DataStorage.LBS.add(b);
             }
         }
         catch (Exception ex){

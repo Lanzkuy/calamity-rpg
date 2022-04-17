@@ -1,5 +1,6 @@
 package data;
 
+import engine.Blacksmith;
 import engine.Dungeon;
 import engine.Inventory;
 import entity.Boss;
@@ -21,6 +22,7 @@ public class DataStorage {
     public static ArrayList<HuntingItem> LHI = new ArrayList<>();
     public static ArrayList<ShopItem> LSI = new ArrayList<>();
     public static ArrayList<Inventory> LI = new ArrayList<>();
+    public static ArrayList<Blacksmith> LBS = new ArrayList<>();
     public static ArrayList<HuntEnemy> LHE = new ArrayList<>();
     public static ArrayList<Boss> LB = new ArrayList<>();
     public static ArrayList<Map> LM = new ArrayList<>();
@@ -124,6 +126,40 @@ public class DataStorage {
         }
         catch (Exception ex){
             System.err.println("Something went wrong in getHuntingItem : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get inventory item by itemID
+    public static Inventory getInventoryID(String itemID){
+        try{
+            if(!itemID.equals("")){
+                for (Inventory i : LI) {
+                    if(itemID.equals(i.getItemID())){
+                        return i;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getHuntingItem : " + ex.getMessage());
+        }
+        return null;
+    }
+
+    //To get blacksmith item by blacksmithID
+    public static Blacksmith getBlacksmithItem(String blacksmithID){
+        try{
+            if(!blacksmithID.equals("")){
+                for (Blacksmith bs : LBS) {
+                    if(blacksmithID.equals(bs.getItemID())){
+                        return bs;
+                    }
+                }
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in getBlacksmithItem : " + ex.getMessage());
         }
         return null;
     }
