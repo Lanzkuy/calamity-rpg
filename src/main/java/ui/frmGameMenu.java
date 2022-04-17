@@ -61,6 +61,12 @@ public class frmGameMenu extends JFrame{
         try{
             DataSaver.savePlayerData();
             Player.initializeEquipment();
+            if(Player.name.equals("")){
+                String name = JOptionPane.showInputDialog(null, "Player Name");
+                JOptionPane.showMessageDialog(null, "Welcome to Calamity RPG. Have funn >_<");
+                Player.name = name;
+                DataSaver.savePlayerData();
+            }
             lblPlayerName.setText(Player.name);
             lblLevel.setText("Level " + Player.level);
             lblMoneyValue.setText("$"+Player.money);
