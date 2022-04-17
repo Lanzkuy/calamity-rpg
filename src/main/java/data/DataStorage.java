@@ -147,11 +147,11 @@ public class DataStorage {
                 while (i < LHE.size()) {
                     if(he.getMapID().equals(Player.mapID) && he.getType().equals("Crook")){
                         if(he.getEnemyID().equals(LHE.get(i).getEnemyID())){
-                            he.setLevel(rand.nextInt(Player.level+1-1)+1);
+                            he.setLevel(rand.nextInt(Player.level-5-1)+1);
                             if(he.getLevel()>1){
                                 he.setBaseAttack((he.getBaseAttack() + (2 * he.getLevel())));
-                                he.setBaseDefense((he.getBaseDefense() + (3 * he.getLevel())));
-                                he.setBaseMaxHealth((he.getBaseMaxHealth() + (4 * he.getLevel())));
+                                he.setBaseDefense((he.getBaseDefense() + (2 * he.getLevel())));
+                                he.setBaseMaxHealth((he.getBaseMaxHealth() + (3 * he.getLevel())));
                                 he.setBaseCriticalChance((int) (he.getBaseCriticalChance() + (0.5 * he.getLevel())));
                                 he.setExpDrop((int) (he.getExpDrop() + (0.5 * he.getLevel())));
                             }
