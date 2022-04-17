@@ -9,6 +9,7 @@ import items.Weapon;
 import ui.frmBlacksmith;
 
 import javax.swing.*;
+import java.rmi.ServerError;
 
 public class Blacksmith {
     private String blacksmithID;
@@ -35,95 +36,108 @@ public class Blacksmith {
         setCost(cost);
     }
 
+    //To craft a equip using materials in inventory
     public static void craft(frmBlacksmith fb, String blacksmithID){
-        Blacksmith bs = DataStorage.getBlacksmithItem(blacksmithID);
-        if(bs != null){
-            Weapon w = DataStorage.getWeapon(bs.getItemID());
-            Armor a = DataStorage.getArmor(bs.getItemID());
-            Pendant p = DataStorage.getPendant(bs.getItemID());
 
-            if(w != null){
-                if(Player.weapon == null){
-                    Player.weapon = w;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+        try{
+            Blacksmith bs = DataStorage.getBlacksmithItem(blacksmithID);
+            if(bs != null){
+                Weapon w = DataStorage.getWeapon(bs.getItemID());
+                Armor a = DataStorage.getArmor(bs.getItemID());
+                Pendant p = DataStorage.getPendant(bs.getItemID());
+
+                if(w != null){
+                    if(Player.weapon == null){
+                        Player.weapon = w;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+                    }
+                    else if(w.getAdditionalAttack() > Player.weapon.getAdditionalAttack()){
+                        Player.weapon = w;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(fb ,"You current weapon is more powerful than this");
+                    }
                 }
-                else if(w.getAdditionalAttack() > Player.weapon.getAdditionalAttack()){
-                    Player.weapon = w;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+                else if(a != null){
+                    if(Player.armor == null){
+                        Player.armor = a;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
+                    }
+                    else if(a.getAdditionalDefense() > Player.armor.getAdditionalDefense()){
+                        Player.armor = a;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(fb ,"You current armor is more powerful than this");
+                    }
                 }
-                else{
-                    JOptionPane.showMessageDialog(fb ,"You current weapon is more powerful than this");
+                else if(p != null){
+                    if(Player.pendant == null){
+                        Player.pendant = p;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
+                    }
+                    else if(p.getAdditionalMaxHealth() >= Player.pendant.getAdditionalMaxHealth()){
+                        Player.pendant = p;
+                        Player.money -= bs.getCost();
+                        Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
+                        Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
+                        Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
+                        JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(fb ,"You current pendant is more powerful than this");
+                    }
                 }
             }
-            else if(a != null){
-                if(Player.armor == null){
-                    Player.armor = a;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
-                }
-                else if(a.getAdditionalDefense() > Player.armor.getAdditionalDefense()){
-                    Player.armor = a;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
-                }
-                else{
-                    JOptionPane.showMessageDialog(fb ,"You current armor is more powerful than this");
-                }
-            }
-            else if(p != null){
-                if(Player.pendant == null){
-                    Player.pendant = p;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
-                }
-                else if(p.getAdditionalMaxHealth() >= Player.pendant.getAdditionalMaxHealth()){
-                    Player.pendant = p;
-                    Player.money -= bs.getCost();
-                    Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
-                    Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
-                    Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                    JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
-                }
-                else{
-                    JOptionPane.showMessageDialog(fb ,"You current pendant is more powerful than this");
-                }
-            }
+            DataSaver.savePlayerData();
+            DataSaver.saveInventoryData();
         }
-        DataSaver.savePlayerData();
-        DataSaver.saveInventoryData();
+        catch (Exception ex){
+            System.err.println("Something went wrong in craft: " + ex);
+        }
     }
 
+    //Get craft item name
     public static String getCraftItemName(String itemID){
         String craftItemName = "";
-        Weapon w = DataStorage.getWeapon(itemID);
-        Armor a = DataStorage.getArmor(itemID);
-        Pendant p = DataStorage.getPendant(itemID);
+        try{
+            Weapon w = DataStorage.getWeapon(itemID);
+            Armor a = DataStorage.getArmor(itemID);
+            Pendant p = DataStorage.getPendant(itemID);
 
-        if(w != null){
-            craftItemName = w.getName();
+            if(w != null){
+                craftItemName = w.getName();
+            }
+            else if (a != null){
+                craftItemName = a.getName();
+            }
+            else if(p != null){
+                craftItemName = p.getName();
+            }
         }
-        else if (a != null){
-            craftItemName = a.getName();
-        }
-        else if(p != null){
-            craftItemName = p.getName();
+        catch (Exception ex){
+            System.err.println("Something went wrong in getCraftItemName: " + ex);
         }
         return craftItemName;
     }

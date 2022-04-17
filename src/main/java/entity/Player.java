@@ -48,7 +48,7 @@ public class Player{
     //To give lifeSteal when attacking
     public static void lifeSteal(int damage){
         if(totalLifesteal > 0) {
-            int life = (totalLifesteal/100) * damage;
+            int life = damage * totalLifesteal / 100;
             heal(life);
         }
     }
@@ -78,9 +78,9 @@ public class Player{
             System.out.println("Congratulations you leveled up");
             exp = extraExp;
             level += 1;
-            maxExp += maxExp / 4;
-            baseAttack += 2;
-            baseDefense += 2;
+            maxExp += maxExp / 8;
+            baseAttack += 4;
+            baseDefense += 5;
             baseMaxHealth += 5;
             baseCriticalChance += 0.1 * level;
         }

@@ -2,7 +2,6 @@ package ui;
 
 import data.DataStorage;
 import engine.Dungeon;
-import engine.Inventory;
 import entity.Boss;
 import entity.Map;
 import entity.Player;
@@ -28,11 +27,12 @@ public class frmDungeon extends  JDialog{
         super(fgm, "DUNGEON", ModalityType.APPLICATION_MODAL);
         this.fgm = fgm;
         this.dungeon = dungeon;
-        loadEntity();
         initialize();
     }
 
     private void initialize(){
+        loadBoss();
+        loadHealthBar();
         btnAttackOnClick();
         btnBlockOnClick();
         btnHealOnClick();
@@ -48,99 +48,127 @@ public class frmDungeon extends  JDialog{
         pack();
     }
 
-    private void loadEntity(){
-        boss = DataStorage.getBossEnemy(dungeon.getBossID());
-        if(boss != null){
-            pLogText.setText(String.format("""
+    private void loadBoss(){
+        try{
+            boss = DataStorage.getBossEnemy(dungeon.getBossID());
+            if(boss != null){
+                pLogText.setText(String.format("""
                     You challenge boss %s
                     Attack : %s
                     Defense : %s
                     Critical Chance : %s
                     """, boss.getName(), boss.getBaseAttack(),
-                    boss.getBaseDefense(), boss.getBaseCriticalChance()));
-            pScrollPane.getViewport().add(pLogText);
-
-            loadHealthBar();
+                        boss.getBaseDefense(), boss.getBaseCriticalChance()));
+                pScrollPane.getViewport().add(pLogText);
+            }
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadEntity : " + ex);
         }
     }
 
     private void loadHealthBar(){
-        playerHealthBar.setStringPainted(true);
-        playerHealthBar.setMaximum(Player.totalMaxHealth);
-        playerHealthBar.setValue(Player.health);
-        playerHealthBar.setString(Player.health+"/"+Player.totalMaxHealth);
-        bossHealthBar.setStringPainted(true);
-        bossHealthBar.setMaximum(boss.getBaseMaxHealth());
-        bossHealthBar.setValue(boss.getHealth());
-        bossHealthBar.setString(boss.getHealth()+"/"+boss.getBaseMaxHealth());
+        try{
+            playerHealthBar.setStringPainted(true);
+            playerHealthBar.setMaximum(Player.totalMaxHealth);
+            playerHealthBar.setValue(Player.health);
+            playerHealthBar.setString(Player.health+"/"+Player.totalMaxHealth);
+            bossHealthBar.setStringPainted(true);
+            bossHealthBar.setMaximum(boss.getBaseMaxHealth());
+            bossHealthBar.setValue(boss.getHealth());
+            bossHealthBar.setString(boss.getHealth()+"/"+boss.getBaseMaxHealth());
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadHealthBar : " + ex);
+        }
     }
 
     private void btnAttackOnClick(){
-        btnAttack.addActionListener(e -> {
-            String output = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
-            pLogText.setText(pLogText.getText() + output);
-            loadHealthBar();
-            if(output.contains("You lose")){
-                JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
-                setVisible(false);
-                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                fgm.reload();
-                this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
-            }
-            else if(output.contains("You win")){
-                Dungeon.updateDungeon(dungeon.getDungeonID(), dungeon.getMapID(), dungeon.getBossID(), "Defeated");
-                int totalAvailableDungeon = DataStorage.getTotalAvailableDungeonByMap(dungeon.getMapID());
-                if(totalAvailableDungeon == 0){
-                    Map currentMap = DataStorage.getMap(dungeon.getMapID());
-                    Map.openNewMap(Objects.requireNonNull(currentMap).getMapID());
+        try{
+            btnAttack.addActionListener(e -> {
+                String output = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
+                pLogText.setText(pLogText.getText() + output);
+                loadHealthBar();
+                if(output.contains("You lose")){
+                    JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
+                    setVisible(false);
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    fgm.reload();
+                    this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
                 }
-                JOptionPane.showMessageDialog(frmDungeon.this, "Congratulations, you win this dungeon!");
-                setVisible(false);
-                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                fgm.reload();
-                this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+                else if(output.contains("You win")){
+                    Dungeon.updateDungeon(dungeon.getDungeonID(), dungeon.getMapID(), dungeon.getBossID(), "Defeated");
+                    int totalAvailableDungeon = DataStorage.getTotalAvailableDungeonByMap(dungeon.getMapID());
+                    if(totalAvailableDungeon == 0){
+                        Map currentMap = DataStorage.getMap(dungeon.getMapID());
+                        Map.openNewMap(Objects.requireNonNull(currentMap).getMapID());
+                    }
+                    JOptionPane.showMessageDialog(frmDungeon.this, "Congratulations, you win this dungeon!");
+                    setVisible(false);
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    fgm.reload();
+                    this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnAttackOnClick : " + ex);
+        }
     }
 
     private void btnBlockOnClick(){
-        btnBlock.addActionListener(e -> {
-            String output = Dungeon.dungeonBattle(boss, "Block", boss.bossRandomMove());
-            pLogText.setText(pLogText.getText() + output);
-            loadHealthBar();
-            if(output.contains("You lose")){
-                JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
-                setVisible(false);
-                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                fgm.reload();
-                this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        try{
+            btnBlock.addActionListener(e -> {
+                String output = Dungeon.dungeonBattle(boss, "Block", boss.bossRandomMove());
+                pLogText.setText(pLogText.getText() + output);
+                loadHealthBar();
+                if(output.contains("You lose")){
+                    JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
+                    setVisible(false);
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    fgm.reload();
+                    this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnBlockOnClick : " + ex);
+        }
     }
 
     private void btnHealOnClick(){
-        btnHeal.addActionListener(e -> {
-            String output = Dungeon.dungeonBattle(boss, "Heal", boss.bossRandomMove());
-            pLogText.setText(pLogText.getText() + output);
-            loadHealthBar();
-            if(output.contains("You lose")){
-                JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
-                setVisible(false);
-                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                fgm.reload();
-                this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        try{
+            btnHeal.addActionListener(e -> {
+                String output = Dungeon.dungeonBattle(boss, "Heal", boss.bossRandomMove());
+                pLogText.setText(pLogText.getText() + output);
+                loadHealthBar();
+                if(output.contains("You lose")){
+                    JOptionPane.showMessageDialog(frmDungeon.this, "Aww, you dead good luck next time..");
+                    setVisible(false);
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    fgm.reload();
+                    this.dispatchEvent(new WindowEvent(frmDungeon.this, WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnHealOnClick : " + ex);
+        }
     }
 
     private void btnExitOnClick(){
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-            if(getDefaultCloseOperation() == DO_NOTHING_ON_CLOSE){
-                JOptionPane.showMessageDialog(frmDungeon.this, "You must defeat the boss");
-            }
-            }
-        });
+        try{
+            this.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    if(getDefaultCloseOperation() == DO_NOTHING_ON_CLOSE){
+                        JOptionPane.showMessageDialog(frmDungeon.this, "You must defeat the boss");
+                    }
+                }
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnExitOnClick : " + ex);
+        }
     }
 }

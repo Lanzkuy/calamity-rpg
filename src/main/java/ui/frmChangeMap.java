@@ -26,7 +26,7 @@ public class frmChangeMap extends JDialog implements ActionListener{
 
     private void initialize(){
         lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
-        loadButton();
+        loadMapButton();
 
         setContentPane(pChangeMap);
         setMinimumSize(pChangeMap.getMinimumSize());
@@ -37,33 +37,43 @@ public class frmChangeMap extends JDialog implements ActionListener{
         pack();
     }
 
-    private void loadButton(){
-        pMaps.removeAll();
-        ArrayList<Map> mapData = DataStorage.LM;
-        for (int i = 0; i<mapData.size(); i++){
-            JButton button = new JButton();
-            button.setName(mapData.get(i).getMapID());
-            button.setText(mapData.get(i).getMapName());
-            button.setBackground(new Color(232, 232, 232));
-            button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-            button.setSize(new Dimension(258, 54));
-            button.setVisible(true);
-            button.addActionListener(this);
+    private void loadMapButton(){
+        try{
+            pMaps.removeAll();
+            ArrayList<Map> mapData = DataStorage.LM;
+            for (int i = 0; i<mapData.size(); i++){
+                JButton button = new JButton();
+                button.setName(mapData.get(i).getMapID());
+                button.setText(mapData.get(i).getMapName());
+                button.setBackground(new Color(232, 232, 232));
+                button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+                button.setSize(new Dimension(258, 54));
+                button.setVisible(true);
+                button.addActionListener(this);
 
-            if(mapData.get(i).getStatus().equals("Lock")){
-                button.setEnabled(false);
+                if(mapData.get(i).getStatus().equals("Lock")){
+                    button.setEnabled(false);
+                }
+
+                pMaps.setLayout(new GridLayout(i+1, 0));
+                pMaps.add(button);
             }
-
-            pMaps.setLayout(new GridLayout(i+1, 0));
-            pMaps.add(button);
+            pScrollPane.getViewport().add(pMaps);
         }
-        pScrollPane.getViewport().add(pMaps);
+        catch (Exception ex){
+            System.err.println("Something went wrong in loadMapButton: " + ex);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
-        Player.mapID = button.getName();
-        lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
+        try{
+            JButton button = (JButton) e.getSource();
+            Player.mapID = button.getName();
+            lblCurrentMap.setText("Current Map : " + Objects.requireNonNull(DataStorage.getMap(Player.mapID)).getMapName());
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in frmChangeMapActionPerformed: " + ex);
+        }
     }
 }

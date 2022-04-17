@@ -14,6 +14,7 @@ public class Map {
         setMapName(mapName);
         setStatus(status);
     }
+
     //To update map status
     public static void openNewMap(String mapID){
         try{

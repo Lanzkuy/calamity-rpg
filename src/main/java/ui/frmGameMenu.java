@@ -58,81 +58,116 @@ public class frmGameMenu extends JFrame{
     }
 
     public void reload(){
-        DataSaver.savePlayerData();
-        Player.initializeEquipment();
-        lblPlayerName.setText(Player.name);
-        lblLevel.setText("Level " + Player.level);
-        lblMoneyValue.setText("$"+Player.money);
-        lblAttackValue.setText(String.valueOf(Player.totalAttack));
-        lblDefenseValue.setText(String.valueOf(Player.totalDefense));
-        lblCriticalChanceValue.setText(Player.totalCriticalChance+"%");
-        lblLifestealValue.setText(Player.totalLifesteal+"%");
+        try{
+            DataSaver.savePlayerData();
+            Player.initializeEquipment();
+            lblPlayerName.setText(Player.name);
+            lblLevel.setText("Level " + Player.level);
+            lblMoneyValue.setText("$"+Player.money);
+            lblAttackValue.setText(String.valueOf(Player.totalAttack));
+            lblDefenseValue.setText(String.valueOf(Player.totalDefense));
+            lblCriticalChanceValue.setText(Player.totalCriticalChance+"%");
+            lblLifestealValue.setText(Player.totalLifesteal+"%");
 
-        healthBar.setStringPainted(true);
-        healthBar.setMaximum(Player.totalMaxHealth);
-        healthBar.setValue(Player.health);
-        healthBar.setString(Player.health+"/"+Player.totalMaxHealth);
-        expBar.setStringPainted(true);
-        expBar.setMaximum(Player.maxExp);
-        expBar.setValue(Player.exp);
-        expBar.setString(Player.exp+"/"+Player.maxExp);
+            healthBar.setStringPainted(true);
+            healthBar.setMaximum(Player.totalMaxHealth);
+            healthBar.setValue(Player.health);
+            healthBar.setString(Player.health+"/"+Player.totalMaxHealth);
+            expBar.setStringPainted(true);
+            expBar.setMaximum(Player.maxExp);
+            expBar.setValue(Player.exp);
+            expBar.setString(Player.exp+"/"+Player.maxExp);
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in reloadGameMenu : " + ex);
+        }
     }
 
     private void btnHuntOnClick(){
-        btnHunt.addActionListener(e -> {
-            //Randomize the enemy
-            HuntEnemy ce = DataStorage.getRandomHuntEnemy();
-            if(ce != null){
-                //Execute hunt battle system
-                if(Player.health != 0){
-                    pLogText.setText(pLogText.getText() + "\n" + Hunt.huntBattle(ce));
-                }
-                else{
-                    pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
-                }
-                pScrollPane.getViewport().add(pLogText);
+        try{
+            btnHunt.addActionListener(e -> {
+                //Randomize the enemy
+                HuntEnemy ce = DataStorage.getRandomHuntEnemy();
+                if(ce != null){
+                    //Execute hunt battle system
+                    if(Player.health != 0){
+                        pLogText.setText(pLogText.getText() + "\n" + Hunt.huntBattle(ce));
+                    }
+                    else{
+                        pLogText.setText(pLogText.getText() + "\nYour health is 0. Please take some medicine!\n");
+                    }
+                    pScrollPane.getViewport().add(pLogText);
 
-                DataLoader.clearData();
-                DataLoader.loadData();
-                reload();
-            }
-        });
+                    DataLoader.clearData();
+                    DataLoader.loadData();
+                    reload();
+                }
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnHuntOnClick : " + ex);
+        }
     }
 
     private void btnMapOnClick(){
-        btnMap.addActionListener(e -> new frmChangeMap(this));
+        try{
+            btnMap.addActionListener(e -> new frmChangeMap(this));
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnMapOnClick: " + ex);
+        }
     }
 
     private void btnInventoryOnClick(){
-        btnInventory.addActionListener(e -> new frmInventory(this));
+        try{
+            btnInventory.addActionListener(e -> new frmInventory(this));
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnInventoryOnClick : " + ex);
+        }
     }
 
     private void btnShopOnClick(){
-        btnShop.addActionListener(e -> new frmShop(this));
+        try{
+            btnShop.addActionListener(e -> new frmShop(this));
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnShopOnClick : " + ex);
+        }
     }
 
     private void btnBlacksmithOnClick(){
-        btnBlacksmith.addActionListener(e -> new frmBlacksmith(this));
+        try{
+            btnBlacksmith.addActionListener(e -> new frmBlacksmith(this));
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnBlacksmithOnClick : " + ex);
+        }
     }
 
     private void btnDungeonOnClick(){
-        btnDungeon.addActionListener(e ->{
-            if(Player.health == Player.totalMaxHealth) {
-                Dungeon dungeon = DataStorage.getAvailableDungeon(Player.mapID);
-                if(dungeon != null){
-                    int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to dungeon battle?", "Select an option...", JOptionPane.YES_NO_OPTION);
-                    if (confirmation == 0) {
-                        new frmDungeon(this, dungeon);
+        try{
+            btnDungeon.addActionListener(e ->{
+                if(Player.health == Player.totalMaxHealth) {
+                    Dungeon dungeon = DataStorage.getAvailableDungeon(Player.mapID);
+                    if(dungeon != null){
+                        int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to dungeon battle?", "Select an option...", JOptionPane.YES_NO_OPTION);
+                        if (confirmation == 0) {
+                            new frmDungeon(this, dungeon);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frmGameMenu.this, "You already beat all dungeon in this map");
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(frmGameMenu.this, "You already beat all dungeon in this map");
+                    JOptionPane.showMessageDialog(frmGameMenu.this, "Your health must be full to enter dungeon");
                 }
-            }
-            else{
-                JOptionPane.showMessageDialog(frmGameMenu.this, "Your health must be full to enter dungeon");
-            }
-        });
+            });
+        }
+        catch (Exception ex){
+            System.err.println("Something went wrong in btnDungeonOnClick : " + ex);
+        }
     }
 
     public static void main(String[] args) {
