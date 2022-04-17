@@ -187,27 +187,32 @@ public class frmShop extends JDialog implements ActionListener {
         ShopItem si = DataStorage.getShopItem(button.getName());
         if(si != null){
             if(button.getText().equals("BUY")){
-                if(si.getType().equals("Weapon")){
-                    if(Player.weapon == null){
-                        Player.money -= si.getPrice();
-                        Player.weapon = DataStorage.getWeapon(si.getItemID());
+                if((Player.money - si.getPrice()) >= 0){
+                    if(si.getType().equals("Weapon")){
+                        if(Player.weapon == null){
+                            Player.money -= si.getPrice();
+                            Player.weapon = DataStorage.getWeapon(si.getItemID());
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(frmShop.this, "You already have a weapon");
+                        }
                     }
-                    else{
-                        JOptionPane.showMessageDialog(frmShop.this, "You already have a weapon");
+                    else if(si.getType().equals("Armor")){
+                        if(Player.armor == null){
+                            Player.money -= si.getPrice();
+                            Player.armor = DataStorage.getArmor(si.getItemID());
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(frmShop.this, "You already have a armor");
+                        }
+                    }
+                    else if(si.getType().equals("Consumable")){
+                        Player.money -= si.getPrice();
+                        Inventory.insertItem(si.getItemID(), si.getType(), 1);
                     }
                 }
-                else if(si.getType().equals("Armor")){
-                    if(Player.armor == null){
-                        Player.money -= si.getPrice();
-                        Player.armor = DataStorage.getArmor(si.getItemID());
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(frmShop.this, "You already have a armor");
-                    }
-                }
-                else if(si.getType().equals("Consumable")){
-                    Player.money -= si.getPrice();
-                    Inventory.insertItem(si.getItemID(), si.getType(), 1);
+                else{
+                    JOptionPane.showMessageDialog(frmShop.this, "You dont have enough money");
                 }
             }
             else{
