@@ -149,7 +149,7 @@ public class frmShop extends JDialog implements ActionListener {
                         lblItemName.setVisible(true);
 
                         JLabel lblPrice = new JLabel();
-                        lblPrice.setText("$"+si.getPrice());
+                        lblPrice.setText("$"+(si.getPrice() - (si.getPrice() * 25/100)));
                         lblPrice.setForeground(new Color(43, 43, 43));
                         lblPrice.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
                         lblPrice.setHorizontalAlignment(JLabel.CENTER);
@@ -225,7 +225,7 @@ public class frmShop extends JDialog implements ActionListener {
                     }
                 }
                 else{
-                    Player.money += si.getPrice();
+                    Player.money += si.getPrice() - (si.getPrice() * 25/100);
                     Inventory.updateItem(si.getItemID(), -1);
                     loadSellItem();
                 }
