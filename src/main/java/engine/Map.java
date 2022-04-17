@@ -1,8 +1,7 @@
-package entity;
+package engine;
 
 import data.DataSaver;
 import data.DataStorage;
-import engine.Dungeon;
 
 public class Map {
     private String mapID;

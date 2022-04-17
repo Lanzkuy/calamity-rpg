@@ -1,7 +1,7 @@
 package ui;
 
 import data.DataStorage;
-import entity.Map;
+import engine.Map;
 import entity.Player;
 
 import javax.swing.*;

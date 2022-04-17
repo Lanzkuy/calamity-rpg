@@ -5,7 +5,7 @@ import engine.Dungeon;
 import engine.Inventory;
 import entity.Boss;
 import entity.HuntEnemy;
-import entity.Map;
+import engine.Map;
 import entity.Player;
 import items.*;
 

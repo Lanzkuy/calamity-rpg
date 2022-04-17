@@ -3,7 +3,7 @@ package ui;
 import data.DataStorage;
 import engine.Dungeon;
 import entity.Boss;
-import entity.Map;
+import engine.Map;
 import entity.Player;
 
 import javax.swing.*;
