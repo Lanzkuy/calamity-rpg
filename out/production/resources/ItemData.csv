@@ -28,14 +28,14 @@ ITM26;Calamity Bone;Hunting Item;0;FALSE;FALSE;0;0;0;0;0;0
 ITM27;Low Potion;Consumable;50;TRUE;TRUE;0;0;0;0;0;10
 ITM28;Medium Potion;Consumable;150;TRUE;TRUE;0;0;0;0;0;30
 ITM29;High Potion;Consumable;500;TRUE;TRUE;0;0;0;0;0;100
-ITM30;Basic Sword;Weapon;300;TRUE;TRUE;20;0;0;0;0;0
+ITM30;Basic Sword;Weapon;2000;TRUE;TRUE;20;0;0;0;0;0
 ITM31;Saber Sword;Weapon;500;FALSE;TRUE;35;0;0;0;0;0
 ITM32;Ancient Sword;Weapon;1250;FALSE;TRUE;56;0;0;0;0;0
 ITM33;Lava Sword;Weapon;3200;FALSE;TRUE;70;0;0;0;0;0
 ITM34;Saint Wyvern Sword;Weapon;5000;FALSE;TRUE;150;0;0;0;0;0
 ITM35;Jormungard Sword;Weapon;8000;FALSE;TRUE;250;0;0;0;0;0
 ITM36;Legendary Calamity Sword;Weapon;0;FALSE;FALSE;455;0;0;0;0;0
-ITM37;Basic Armor;Armor;300;TRUE;TRUE;0;20;0;0;0;0
+ITM37;Basic Armor;Armor;2000;TRUE;TRUE;0;20;0;0;0;0
 ITM38;Buster Armor;Armor;500;FALSE;TRUE;0;36;0;0;0;0
 ITM39;Ancient Armor;Armor;1250;FALSE;TRUE;0;60;0;0;0;0
 ITM40;Magma Armor;Armor;3200;FALSE;TRUE;0;78;0;0;0;0

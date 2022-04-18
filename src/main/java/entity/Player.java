@@ -82,7 +82,7 @@ public class Player{
             baseAttack += 2;
             baseDefense += 3;
             baseMaxHealth += 4;
-            baseCriticalChance += (0.1*level);
+            baseCriticalChance += (0.07*level);
         }
     }
 }
