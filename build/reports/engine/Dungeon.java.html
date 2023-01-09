@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dungeon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">engine in calamity-rpg.test Coverage Results</a> &gt; <a href="index.source.html" class="el_package">engine</a> &gt; <span class="el_source">Dungeon.java</span></div><h1>Dungeon.java</h1><pre class="source lang-java linenums">package engine;
+
+import data.DataSaver;
+import data.DataStorage;
+import entity.Boss;
+import entity.Player;
+import items.HuntingItem;
+
+import java.util.Objects;
+import java.util.Random;
+
+public class Dungeon {
+    private String dungeonID;
+    private String mapID;
+    private String bossID;
+    private String status;
+
+<span class="fc" id="L18">    public Dungeon(String dungeonID, String mapID, String bossID, String status){</span>
+<span class="fc" id="L19">        setDungeonID(dungeonID);</span>
+<span class="fc" id="L20">        setMapID(mapID);</span>
+<span class="fc" id="L21">        setBossID(bossID);</span>
+<span class="fc" id="L22">        setStatus(status);</span>
+<span class="fc" id="L23">    }</span>
+
+    public static String afterBattleAction(Boss boss, String action) {
+<span class="fc" id="L26">        Random rand = new Random();</span>
+<span class="fc" id="L27">        StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L28">        int moneyDrop = rand.nextInt(500 - 1) + 1;</span>
+<span class="fc" id="L29">        int expDrop = boss.getExpDrop();</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(Player.health == 0){</span>
+<span class="fc" id="L32">            int totalMoney = Player.money - moneyDrop;</span>
+<span class="fc" id="L33">            Player.money = Math.max(totalMoney, 0);</span>
+<span class="fc" id="L34">            DataSaver.savePlayerData();</span>
+<span class="fc" id="L35">            result.append(&quot;You lose agains &quot;).append(boss.getName()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L36">            result.append(&quot;You dropped $&quot;).append(moneyDrop);</span>
+<span class="fc" id="L37">            result.append(&quot; in the panic\n&quot;);</span>
+<span class="fc" id="L38">            DataSaver.saveInventoryData();</span>
+<span class="fc" id="L39">            return result.toString();</span>
+        }
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        else if(boss.getHealth() == 0){</span>
+<span class="fc" id="L42">            Player.exp += expDrop;</span>
+<span class="fc" id="L43">            Player.money += moneyDrop;</span>
+<span class="fc" id="L44">            Player.levelUp();</span>
+<span class="fc" id="L45">            HuntingItem hi = DataStorage.getHuntingItem(boss.getItemDropID());</span>
+<span class="fc" id="L46">            Inventory.insertItem(Objects.requireNonNull(hi).getItemID(), hi.getType(), 3);</span>
+<span class="fc" id="L47">            DataSaver.saveInventoryData();</span>
+<span class="fc" id="L48">            DataSaver.savePlayerData();</span>
+<span class="fc" id="L49">            result.append(&quot;You win agains &quot;).append(boss.getName()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L50">            result.append(&quot;You get &quot;).append(expDrop);</span>
+<span class="fc" id="L51">            result.append(&quot; exp, $&quot;).append(moneyDrop);</span>
+<span class="fc" id="L52">            result.append(&quot; money\n&quot;).append(&quot;and &quot;);</span>
+<span class="fc" id="L53">            result.append(hi.getName()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L54">            return result.toString();</span>
+        }
+        else{
+<span class="nc" id="L57">            result.append(action);</span>
+<span class="nc" id="L58">            return result.toString();</span>
+        }
+    }
+
+    //Dungeon battle system
+    public static String dungeonBattle(Boss boss, String playerMove, String bossMove){
+<span class="fc" id="L64">        Random rand = new Random();</span>
+<span class="fc" id="L65">        StringBuilder result = new StringBuilder();</span>
+        try{
+            //Damage validation
+<span class="fc" id="L68">            int playerDamage = Player.damage(boss.getBaseDefense());</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if(playerDamage &lt; 0){</span>
+<span class="fc" id="L70">                playerDamage = 0;</span>
+            }
+
+<span class="fc" id="L73">            int bossDamage = boss.damage(Player.totalDefense);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if(bossDamage &lt; 0){</span>
+<span class="nc" id="L75">                bossDamage = 0;</span>
+            }
+
+<span class="fc" id="L78">            int bossSpecialAttackDamage = boss.specialAttack(Player.totalDefense);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">            if(bossSpecialAttackDamage &lt; 0){</span>
+<span class="nc" id="L80">                bossSpecialAttackDamage = 0;</span>
+            }
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if(playerMove.equals(&quot;Attack&quot;)){</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">                if(bossMove.equals(&quot;Attack&quot;)){</span>
+<span class="fc" id="L85">                    Player.getDamage(bossDamage);</span>
+<span class="fc" id="L86">                    boss.getDamage(playerDamage);</span>
+<span class="fc" id="L87">                    result.append(&quot;You deal &quot;).append(playerDamage);</span>
+<span class="fc" id="L88">                    result.append(&quot; damage to &quot;).append(boss.getName());</span>
+<span class="fc" id="L89">                    result.append(&quot;, and get hurt &quot;).append(bossDamage);</span>
+<span class="fc" id="L90">                    result.append(&quot; damage\n&quot;);</span>
+                }
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                else if(bossMove.equals(&quot;Block&quot;)){</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 40) {</span>
+<span class="nc" id="L94">                        result.append(boss.getName()).append(&quot; blocked the attack\n&quot;);</span>
+                    } else {
+<span class="fc" id="L96">                        boss.getDamage(playerDamage);</span>
+<span class="fc" id="L97">                        result.append(boss.getName()).append(&quot; failed block the attack\n&quot;);</span>
+<span class="fc" id="L98">                        result.append(&quot;You attack with &quot;).append(playerDamage);</span>
+<span class="fc" id="L99">                        result.append(&quot; damage\n&quot;);</span>
+                    }
+                }
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">                else if(bossMove.equals(&quot;Special Attack&quot;)){</span>
+<span class="fc" id="L103">                    Player.getDamage(bossSpecialAttackDamage);</span>
+<span class="fc" id="L104">                    boss.getDamage(playerDamage);</span>
+<span class="fc" id="L105">                    result.append(boss.getName()).append(&quot; use special attack\n&quot;);</span>
+<span class="fc" id="L106">                    result.append(&quot;You deal &quot;).append(playerDamage);</span>
+<span class="fc" id="L107">                    result.append(&quot; damage, and get hurt &quot;).append(bossSpecialAttackDamage);</span>
+<span class="fc" id="L108">                    result.append(&quot; damage\n&quot;);</span>
+                }
+                else{
+<span class="nc" id="L111">                    System.out.println(&quot;The move is not exist&quot;);</span>
+                }
+            }
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            else if(playerMove.equals(&quot;Block&quot;)){</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                if(bossMove.equals(&quot;Attack&quot;)){</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 50) {</span>
+<span class="nc" id="L117">                        result.append(&quot;You blocked the attack\n&quot;);</span>
+                    }
+                    else {
+<span class="fc" id="L120">                        Player.getDamage(bossDamage);</span>
+<span class="fc" id="L121">                        result.append(&quot;You failed block the attack\n&quot;);</span>
+<span class="fc" id="L122">                        result.append(&quot;You got hurt &quot;).append(bossDamage);</span>
+<span class="fc" id="L123">                        result.append(&quot; damage\n&quot;);</span>
+                    }
+                }
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                else if(bossMove.equals(&quot;Block&quot;)){</span>
+<span class="fc" id="L127">                    result.append(&quot;You both make a stand, no one get hurt\n&quot;);</span>
+                }
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">                else if(bossMove.equals(&quot;Special Attack&quot;)){</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 50) {</span>
+<span class="nc" id="L131">                        result.append(&quot;You blocked the attack\n&quot;);</span>
+                    } else {
+<span class="fc" id="L133">                        Player.getDamage(bossSpecialAttackDamage);</span>
+<span class="fc" id="L134">                        result.append(boss.getName()).append(&quot; use special attack\n&quot;);</span>
+<span class="fc" id="L135">                        result.append(&quot;You failed block the attack\n&quot;).append(&quot;You got hurt &quot;).append(bossSpecialAttackDamage);</span>
+<span class="fc" id="L136">                        result.append(&quot; damage\n&quot;);</span>
+                    }
+                }
+                else{
+<span class="nc" id="L140">                    System.out.println(&quot;The move is not exist&quot;);</span>
+                }
+            }
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            else if(playerMove.equals(&quot;Heal&quot;)){</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                if(bossMove.equals(&quot;Attack&quot;)){</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 30) {</span>
+<span class="fc" id="L146">                        int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);</span>
+<span class="fc" id="L147">                        Player.heal(healTotal);</span>
+<span class="fc" id="L148">                        Player.getDamage(bossDamage);</span>
+<span class="fc" id="L149">                        result.append(&quot;You cast heal spell you get &quot;).append(healTotal).append(&quot; heal\n&quot;);</span>
+<span class="fc" id="L150">                    } else {</span>
+<span class="nc" id="L151">                        Player.getDamage(bossDamage);</span>
+<span class="nc" id="L152">                        result.append(&quot;You heal spell is failed\n&quot;);</span>
+                    }
+<span class="fc" id="L154">                    result.append(&quot;You got hurt &quot;).append(bossDamage);</span>
+<span class="fc" id="L155">                    result.append(&quot; damage\n&quot;);</span>
+                }
+<span class="fc bfc" id="L157" title="All 2 branches covered.">                else if(bossMove.equals(&quot;Block&quot;)){</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 30) {</span>
+<span class="nc" id="L159">                        int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);</span>
+<span class="nc" id="L160">                        Player.heal(healTotal);</span>
+<span class="nc" id="L161">                        result.append(boss.getName()).append(&quot; make a stand\n&quot;);</span>
+<span class="nc" id="L162">                        result.append(&quot;You cast heal spell you get &quot;).append(healTotal).append(&quot; heal\n&quot;);</span>
+<span class="nc" id="L163">                    } else {</span>
+<span class="fc" id="L164">                        Player.getDamage(bossDamage);</span>
+<span class="fc" id="L165">                        result.append(boss.getName()).append(&quot; make a stand\n&quot;);</span>
+<span class="fc" id="L166">                        result.append(&quot;You heal spell is failed\n&quot;);</span>
+                    }
+                }
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">                else if(bossMove.equals(&quot;Special Attack&quot;)){</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                    if (rand.nextInt(100 - 1) + 1 &lt;= 30) {</span>
+<span class="nc" id="L171">                        int healTotal = Player.totalMaxHealth - (Player.totalMaxHealth * 25 / 100);</span>
+<span class="nc" id="L172">                        Player.heal(healTotal);</span>
+<span class="nc" id="L173">                        Player.getDamage(bossSpecialAttackDamage);</span>
+<span class="nc" id="L174">                        result.append(&quot;You cast heal spell you get &quot;).append(healTotal).append(&quot; heal\n&quot;);</span>
+<span class="nc" id="L175">                    } else {</span>
+<span class="fc" id="L176">                        Player.getDamage(bossSpecialAttackDamage);</span>
+<span class="fc" id="L177">                        result.append(&quot;You heal spell is failed\n&quot;);</span>
+                    }
+<span class="fc" id="L179">                    result.append(boss.getName()).append(&quot; use special attack\n&quot;);</span>
+<span class="fc" id="L180">                    result.append(&quot;You got hurt &quot;).append(bossSpecialAttackDamage);</span>
+<span class="fc" id="L181">                    result.append(&quot; damage\n&quot;);</span>
+                }
+                else{
+<span class="nc" id="L184">                    System.out.println(&quot;The move is not exist&quot;);</span>
+                }
+            }
+            else{
+<span class="fc" id="L188">                System.out.println(&quot;The move is not exist&quot;);</span>
+            }
+        }
+<span class="nc" id="L191">        catch (Exception ex){</span>
+<span class="nc" id="L192">            System.err.println(&quot;Something went wrong in dungeonBattle : &quot; + ex);</span>
+<span class="fc" id="L193">        }</span>
+<span class="fc" id="L194">        return result.toString();</span>
+    }
+
+    //To update dungeon status
+    public static void updateDungeon(String dungeonID, String mapID, String bossID, String status){
+        try{
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            for (int i = 0; i&lt;DataStorage.LD.size(); i++){</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                if(DataStorage.LD.get(i).getDungeonID().equals(dungeonID)){</span>
+<span class="fc" id="L202">                    DataStorage.LD.set(i, new Dungeon(dungeonID, mapID, bossID, status));</span>
+<span class="fc" id="L203">                    DataSaver.saveDungeonData();</span>
+<span class="fc" id="L204">                    return;</span>
+                }
+            }
+<span class="fc" id="L207">            throw new Exception(&quot;Dungeon not found&quot;);</span>
+        }
+<span class="fc" id="L209">        catch (Exception ex){</span>
+<span class="fc" id="L210">            System.err.println(&quot;Something went wrong in updateDungeon: &quot; + ex);</span>
+<span class="fc" id="L211">            throw new RuntimeException();</span>
+        }
+    }
+
+    //Getter Setter
+    public String getDungeonID() {
+<span class="fc" id="L217">        return dungeonID;</span>
+    }
+
+    public void setDungeonID(String dungeonID) {
+<span class="fc" id="L221">        this.dungeonID = dungeonID;</span>
+<span class="fc" id="L222">    }</span>
+
+    public String getMapID() {
+<span class="fc" id="L225">        return mapID;</span>
+    }
+
+    public void setMapID(String mapID) {
+<span class="fc" id="L229">        this.mapID = mapID;</span>
+<span class="fc" id="L230">    }</span>
+
+    public String getBossID() {
+<span class="fc" id="L233">        return bossID;</span>
+    }
+
+    public void setBossID(String bossID) {
+<span class="fc" id="L237">        this.bossID = bossID;</span>
+<span class="fc" id="L238">    }</span>
+
+    public String getStatus() {
+<span class="fc" id="L241">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="fc" id="L245">        this.status = status;</span>
+<span class="fc" id="L246">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

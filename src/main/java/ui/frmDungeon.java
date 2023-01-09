@@ -86,7 +86,8 @@ public class frmDungeon extends  JDialog{
     private void btnAttackOnClick(){
         try{
             btnAttack.addActionListener(e -> {
-                String output = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
+                String battleAction = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
+                String output = Dungeon.afterBattleAction(boss, battleAction);
                 pLogText.setText(pLogText.getText() + output);
                 loadHealthBar();
                 if(output.contains("You lose")){
@@ -119,7 +120,8 @@ public class frmDungeon extends  JDialog{
     private void btnBlockOnClick(){
         try{
             btnBlock.addActionListener(e -> {
-                String output = Dungeon.dungeonBattle(boss, "Block", boss.bossRandomMove());
+                String battleAction = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
+                String output = Dungeon.afterBattleAction(boss, battleAction);
                 pLogText.setText(pLogText.getText() + output);
                 loadHealthBar();
                 if(output.contains("You lose")){
@@ -139,7 +141,8 @@ public class frmDungeon extends  JDialog{
     private void btnHealOnClick(){
         try{
             btnHeal.addActionListener(e -> {
-                String output = Dungeon.dungeonBattle(boss, "Heal", boss.bossRandomMove());
+                String battleAction = Dungeon.dungeonBattle(boss, "Attack", boss.bossRandomMove());
+                String output = Dungeon.afterBattleAction(boss, battleAction);
                 pLogText.setText(pLogText.getText() + output);
                 loadHealthBar();
                 if(output.contains("You lose")){

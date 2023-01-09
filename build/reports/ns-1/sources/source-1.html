@@ -1,0 +1,319 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Blacksmith</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">engine</a>
+</div>
+
+<h1>Coverage Summary for Class: Blacksmith (engine)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Blacksmith</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57.9%
+  </span>
+  <span class="absValue">
+    (11/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.7%
+  </span>
+  <span class="absValue">
+    (34/101)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package engine;
+&nbsp;
+&nbsp;import data.DataSaver;
+&nbsp;import data.DataStorage;
+&nbsp;import entity.Player;
+&nbsp;import items.Armor;
+&nbsp;import items.Pendant;
+&nbsp;import items.Weapon;
+&nbsp;import ui.frmBlacksmith;
+&nbsp;import ui.frmShop;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.rmi.ServerError;
+&nbsp;
+&nbsp;public class Blacksmith {
+&nbsp;    private String itemID;
+&nbsp;    private String material1ID;
+&nbsp;    private String material2ID;
+&nbsp;    private String material3ID;
+&nbsp;    private int material1Quantity;
+&nbsp;    private int material2Quantity;
+&nbsp;    private int material3Quantity;
+&nbsp;    private int cost;
+&nbsp;
+&nbsp;    public Blacksmith(String blacksmithID, String itemID, String material1ID, String material2ID,
+&nbsp;                      String material3ID, int material1Quantity, int material2Quantity, int material3Quantity,
+<b class="fc">&nbsp;                      int cost){</b>
+<b class="fc">&nbsp;        setItemID(itemID);</b>
+<b class="fc">&nbsp;        setMaterial1ID(material1ID);</b>
+<b class="fc">&nbsp;        setMaterial2ID(material2ID);</b>
+<b class="fc">&nbsp;        setMaterial3ID(material3ID);</b>
+<b class="fc">&nbsp;        setMaterial1Quantity(material1Quantity);</b>
+<b class="fc">&nbsp;        setMaterial2Quantity(material2Quantity);</b>
+<b class="fc">&nbsp;        setMaterial3Quantity(material3Quantity);</b>
+<b class="fc">&nbsp;        setCost(cost);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //To craft a equip using materials in inventory
+&nbsp;    public static void craft(frmBlacksmith fb, String blacksmithID){
+&nbsp;
+&nbsp;        try{
+<b class="fc">&nbsp;            Blacksmith bs = DataStorage.getBlacksmithItem(blacksmithID);</b>
+<b class="fc">&nbsp;            if(bs != null){</b>
+<b class="nc">&nbsp;                if((Player.money - bs.getCost()) &gt;= 0) {</b>
+<b class="nc">&nbsp;                    Weapon w = DataStorage.getWeapon(bs.getItemID());</b>
+<b class="nc">&nbsp;                    Armor a = DataStorage.getArmor(bs.getItemID());</b>
+<b class="nc">&nbsp;                    Pendant p = DataStorage.getPendant(bs.getItemID());</b>
+&nbsp;
+<b class="nc">&nbsp;                    if(w != null){</b>
+<b class="nc">&nbsp;                        if(Player.weapon == null){</b>
+<b class="nc">&nbsp;                            Player.weapon = w;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + w.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        else if(w.getAdditionalAttack() &gt; Player.weapon.getAdditionalAttack()){</b>
+<b class="nc">&nbsp;                            Player.weapon = w;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + w.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+&nbsp;                        else{
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;You current weapon is more powerful than this&quot;);</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                    else if(a != null){</b>
+<b class="nc">&nbsp;                        if(Player.armor == null){</b>
+<b class="nc">&nbsp;                            Player.armor = a;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + a.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        else if(a.getAdditionalDefense() &gt; Player.armor.getAdditionalDefense()){</b>
+<b class="nc">&nbsp;                            Player.armor = a;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + a.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+&nbsp;                        else{
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;You current armor is more powerful than this&quot;);</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                    else if(p != null){</b>
+<b class="nc">&nbsp;                        if(Player.pendant == null){</b>
+<b class="nc">&nbsp;                            Player.pendant = p;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + p.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        else if(p.getAdditionalMaxHealth() &gt;= Player.pendant.getAdditionalMaxHealth()){</b>
+<b class="nc">&nbsp;                            Player.pendant = p;</b>
+<b class="nc">&nbsp;                            Player.money -= bs.getCost();</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</b>
+<b class="nc">&nbsp;                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</b>
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;Crafting &quot; + p.getName() + &quot;success&quot;);</b>
+&nbsp;                        }
+&nbsp;                        else{
+<b class="nc">&nbsp;                            JOptionPane.showMessageDialog(fb ,&quot;You current pendant is more powerful than this&quot;);</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;                else{
+<b class="nc">&nbsp;                    JOptionPane.showMessageDialog(fb, &quot;You dont have enough money&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                DataSaver.savePlayerData();</b>
+<b class="nc">&nbsp;                DataSaver.saveInventoryData();</b>
+&nbsp;                return;
+&nbsp;            }
+<b class="fc">&nbsp;            throw new Exception();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (Exception ex){</b>
+<b class="fc">&nbsp;            System.err.println(&quot;Something went wrong in craft: &quot; + ex);</b>
+<b class="fc">&nbsp;            throw new RuntimeException();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    //Get craft item name
+&nbsp;    public static String getCraftItemName(String itemID){
+&nbsp;        try{
+<b class="fc">&nbsp;            Weapon w = DataStorage.getWeapon(itemID);</b>
+<b class="fc">&nbsp;            Armor a = DataStorage.getArmor(itemID);</b>
+<b class="fc">&nbsp;            Pendant p = DataStorage.getPendant(itemID);</b>
+&nbsp;
+<b class="fc">&nbsp;            if(w != null){</b>
+<b class="fc">&nbsp;                return w.getName();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            else if (a != null){</b>
+<b class="fc">&nbsp;                return a.getName();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            else if(p != null){</b>
+<b class="fc">&nbsp;                return p.getName();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        catch (Exception ex){</b>
+<b class="nc">&nbsp;            System.err.println(&quot;Something went wrong in getCraftItemName: &quot; + ex);</b>
+<b class="nc">&nbsp;            throw new RuntimeException();</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Getter Setter
+&nbsp;    public String getItemID() {
+<b class="nc">&nbsp;        return itemID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setItemID(String itemID) {
+<b class="fc">&nbsp;        this.itemID = itemID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaterial1ID() {
+<b class="nc">&nbsp;        return material1ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial1ID(String material1ID) {
+<b class="fc">&nbsp;        this.material1ID = material1ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaterial2ID() {
+<b class="nc">&nbsp;        return material2ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial2ID(String material2ID) {
+<b class="fc">&nbsp;        this.material2ID = material2ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMaterial3ID() {
+<b class="nc">&nbsp;        return material3ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial3ID(String material3ID) {
+<b class="fc">&nbsp;        this.material3ID = material3ID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMaterial1Quantity() {
+<b class="nc">&nbsp;        return material1Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial1Quantity(int material1Quantity) {
+<b class="fc">&nbsp;        this.material1Quantity = material1Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMaterial2Quantity() {
+<b class="nc">&nbsp;        return material2Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial2Quantity(int material2Quantity) {
+<b class="fc">&nbsp;        this.material2Quantity = material2Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMaterial3Quantity() {
+<b class="nc">&nbsp;        return material3Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMaterial3Quantity(int material3Quantity) {
+<b class="fc">&nbsp;        this.material3Quantity = material3Quantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getCost() {
+<b class="nc">&nbsp;        return cost;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCost(int cost) {
+<b class="fc">&nbsp;        this.cost = cost;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-11-03 17:17</div>
+</div>
+</body>
+</html>

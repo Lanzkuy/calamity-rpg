@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Map</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">engine</a>
+</div>
+
+<h1>Coverage Summary for Class: Map (engine)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Map</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package engine;
+&nbsp;
+&nbsp;import data.DataSaver;
+&nbsp;import data.DataStorage;
+&nbsp;
+&nbsp;public class Map {
+&nbsp;    private String mapID;
+&nbsp;    private String mapName;
+&nbsp;    private String status;
+&nbsp;
+<b class="fc">&nbsp;    public Map(String mapID, String mapName, String status){</b>
+<b class="fc">&nbsp;        setMapID(mapID);</b>
+<b class="fc">&nbsp;        setMapName(mapName);</b>
+<b class="fc">&nbsp;        setStatus(status);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //To update map status
+&nbsp;    public static void openNewMap(String mapID){
+&nbsp;        try{
+<b class="fc">&nbsp;            for (int i = 0; i&lt; DataStorage.LM.size(); i++){</b>
+<b class="fc">&nbsp;                if(DataStorage.LM.get(i).getMapID().equals(mapID)){</b>
+<b class="fc">&nbsp;                    int newMapIndex = i+1;</b>
+<b class="fc">&nbsp;                    Map m = DataStorage.LM.get(newMapIndex);</b>
+<b class="fc">&nbsp;                    DataStorage.LM.set(newMapIndex, new Map(m.getMapID(), m.getMapName(), &quot;Unlock&quot;));</b>
+<b class="fc">&nbsp;                    DataSaver.saveMapData();</b>
+&nbsp;                    return;
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;            throw new Exception(&quot;Map not found&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (Exception ex){</b>
+<b class="fc">&nbsp;            System.err.println(&quot;Something went wrong in updateItem: &quot; + ex);</b>
+<b class="fc">&nbsp;            throw new RuntimeException();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    //Getter Setter
+&nbsp;    public String getMapID() {
+<b class="fc">&nbsp;        return mapID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMapID(String mapID) {
+<b class="fc">&nbsp;        this.mapID = mapID;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getMapName() {
+<b class="fc">&nbsp;        return mapName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMapName(String mapName) {
+<b class="fc">&nbsp;        this.mapName = mapName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getStatus() {
+<b class="fc">&nbsp;        return status;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setStatus(String status) {
+<b class="fc">&nbsp;        this.status = status;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-11-03 17:17</div>
+</div>
+</body>
+</html>

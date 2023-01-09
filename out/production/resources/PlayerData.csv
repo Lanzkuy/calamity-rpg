@@ -1,2 +1,2 @@
 MapID;WeaponID;ArmorID;PendantID;Name;Level;Exp;BaseMaxExp;Health;BaseMaxHealth;BaseAttack;BaseDefense;BaseCriticalChance;BaseLifeSteal;Money
-MP02;ITM33;ITM40;;Test;23;387;1557;184;184;142;77;23;0;1789
+MP03;ITM31;ITM38;ITM44;Lans;8;108;104;0;48;25;32;5;0;2384

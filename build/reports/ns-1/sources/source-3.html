@@ -1,0 +1,195 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Hunt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">engine</a>
+</div>
+
+<h1>Coverage Summary for Class: Hunt (engine)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hunt</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    51%
+  </span>
+  <span class="absValue">
+    (25/49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package engine;
+&nbsp;
+&nbsp;import data.DataSaver;
+&nbsp;import data.DataStorage;
+&nbsp;import entity.HuntEnemy;
+&nbsp;import entity.Player;
+&nbsp;import items.HuntingItem;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.Random;
+&nbsp;
+<b class="nc">&nbsp;public class Hunt {</b>
+&nbsp;    public static String huntBattle(HuntEnemy enemy) {
+<b class="fc">&nbsp;        Random rand = new Random();</b>
+<b class="fc">&nbsp;        int moneyDrop = rand.nextInt(50 - 1) + 1;</b>
+<b class="fc">&nbsp;        StringBuilder logOutput = new StringBuilder();</b>
+&nbsp;
+&nbsp;        try{
+&nbsp;            //Enemy encounter
+<b class="fc">&nbsp;            logOutput.append(String.format(&quot;&quot;&quot;</b>
+&nbsp;                    You encountered %s
+&nbsp;                    Level : %s
+&nbsp;                    Attack : %s
+&nbsp;                    Defense : %s
+&nbsp;                    Health : %s/%s
+<b class="fc">&nbsp;                    &quot;&quot;&quot;, enemy.getName(), enemy.getLevel(), enemy.getBaseAttack(),</b>
+<b class="fc">&nbsp;                    enemy.getBaseDefense(), enemy.getHealth(), enemy.getBaseMaxHealth()));</b>
+&nbsp;
+&nbsp;            //Damage validation
+<b class="fc">&nbsp;            int playerDamage = Player.damage(enemy.getBaseDefense());</b>
+<b class="fc">&nbsp;            if(playerDamage &lt; 0){</b>
+<b class="fc">&nbsp;                playerDamage = 0;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            int enemyDamage = enemy.damage(Player.totalDefense);</b>
+<b class="fc">&nbsp;            if(enemyDamage &lt; 0){</b>
+<b class="nc">&nbsp;                enemyDamage = 0;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            //Loop until player/enemy health = 0
+&nbsp;            for (;;) {
+<b class="fc">&nbsp;                Player.getDamage(enemyDamage);</b>
+<b class="fc">&nbsp;                enemy.getDamage(playerDamage);</b>
+&nbsp;
+&nbsp;                //If player/enemy death
+<b class="fc">&nbsp;                if (Player.health == 0) {</b>
+<b class="fc">&nbsp;                    logOutput.append(&quot;You lose agains &quot;).</b>
+<b class="fc">&nbsp;                            append(enemy.getName()).append(&quot;\n&quot;).</b>
+<b class="fc">&nbsp;                            append(&quot;you dropped $&quot;).append(moneyDrop).</b>
+<b class="fc">&nbsp;                            append(&quot; in the panic\n&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;                    Player.money -= moneyDrop;</b>
+<b class="fc">&nbsp;                    DataSaver.savePlayerData();</b>
+<b class="fc">&nbsp;                    return logOutput.toString();</b>
+&nbsp;                }
+<b class="fc">&nbsp;                else if (enemy.getHealth() == 0) {</b>
+<b class="nc">&nbsp;                    int exp = enemy.getExpDrop();</b>
+&nbsp;
+&nbsp;                    //Item drop RNG
+<b class="nc">&nbsp;                    if (rand.nextInt(100 - 1) + 1 &lt;= 50) {</b>
+<b class="nc">&nbsp;                        HuntingItem hi = DataStorage.getHuntingItem(enemy.getItemDropID());</b>
+<b class="nc">&nbsp;                        Inventory.insertItem(Objects.requireNonNull(hi).getItemID(), hi.getType(), 1);</b>
+<b class="nc">&nbsp;                        DataSaver.saveInventoryData();</b>
+<b class="nc">&nbsp;                        logOutput.append(&quot;You win agains &quot;).</b>
+<b class="nc">&nbsp;                                append(enemy.getName()).append(&quot;\n&quot;).</b>
+<b class="nc">&nbsp;                                append(&quot;You get &quot;).append(exp).</b>
+<b class="nc">&nbsp;                                append(&quot; exp, $&quot;).append(moneyDrop).</b>
+<b class="nc">&nbsp;                                append(&quot; money\n&quot;).append(&quot;and &quot;).</b>
+<b class="nc">&nbsp;                                append(hi.getName()).append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;                    }</b>
+&nbsp;                    else{
+<b class="nc">&nbsp;                        logOutput.append(&quot;You win agains &quot;).</b>
+<b class="nc">&nbsp;                                append(enemy.getName()).</b>
+<b class="nc">&nbsp;                                append(&quot;\n&quot;).append(&quot;You get &quot;).</b>
+<b class="nc">&nbsp;                                append(exp).append(&quot; exp and $&quot;).</b>
+<b class="nc">&nbsp;                                append(moneyDrop).append(&quot; money\n&quot;);</b>
+&nbsp;                    }
+&nbsp;
+<b class="nc">&nbsp;                    Player.exp += exp;</b>
+<b class="nc">&nbsp;                    Player.money += moneyDrop;</b>
+<b class="nc">&nbsp;                    Player.levelUp();</b>
+<b class="nc">&nbsp;                    DataSaver.savePlayerData();</b>
+<b class="nc">&nbsp;                    return logOutput.toString();</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        catch (Exception ex){</b>
+<b class="fc">&nbsp;            System.err.println(&quot;Something went wrong in huntBattle: &quot; + ex);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-11-03 17:17</div>
+</div>
+</body>
+</html>

@@ -23,11 +23,14 @@ public class Map {
                     Map m = DataStorage.LM.get(newMapIndex);
                     DataStorage.LM.set(newMapIndex, new Map(m.getMapID(), m.getMapName(), "Unlock"));
                     DataSaver.saveMapData();
+                    return;
                 }
             }
+            throw new Exception("Map not found");
         }
         catch (Exception ex){
             System.err.println("Something went wrong in updateItem: " + ex);
+            throw new IllegalArgumentException();
         }
     }
 

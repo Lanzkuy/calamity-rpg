@@ -64,11 +64,11 @@ public class DataStorage {
     }
 
     //To get blacksmith item by blacksmithID
-    public static Blacksmith getBlacksmithItem(String blacksmithID){
+    public static Blacksmith getBlacksmithItem(String itemID){
         try{
-            if(!blacksmithID.equals("")){
+            if(!itemID.equals("")){
                 for (Blacksmith bs : LBS) {
-                    if(blacksmithID.equals(bs.getItemID())){
+                    if(itemID.equals(bs.getItemID())){
                         return bs;
                     }
                 }

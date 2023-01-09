@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Blacksmith.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">engine in calamity-rpg.test Coverage Results</a> &gt; <a href="index.source.html" class="el_package">engine</a> &gt; <span class="el_source">Blacksmith.java</span></div><h1>Blacksmith.java</h1><pre class="source lang-java linenums">package engine;
+
+import data.DataSaver;
+import data.DataStorage;
+import entity.Player;
+import items.Armor;
+import items.Pendant;
+import items.Weapon;
+import ui.frmBlacksmith;
+import ui.frmShop;
+
+import javax.swing.*;
+import java.rmi.ServerError;
+
+public class Blacksmith {
+    private String blacksmithID;
+    private String itemID;
+    private String material1ID;
+    private String material2ID;
+    private String material3ID;
+    private int material1Quantity;
+    private int material2Quantity;
+    private int material3Quantity;
+    private int cost;
+
+    public Blacksmith(String blacksmithID, String itemID, String material1ID, String material2ID,
+                      String material3ID, int material1Quantity, int material2Quantity, int material3Quantity,
+<span class="fc" id="L28">                      int cost){</span>
+<span class="fc" id="L29">        setBlacksmithID(blacksmithID);</span>
+<span class="fc" id="L30">        setItemID(itemID);</span>
+<span class="fc" id="L31">        setMaterial1ID(material1ID);</span>
+<span class="fc" id="L32">        setMaterial2ID(material2ID);</span>
+<span class="fc" id="L33">        setMaterial3ID(material3ID);</span>
+<span class="fc" id="L34">        setMaterial1Quantity(material1Quantity);</span>
+<span class="fc" id="L35">        setMaterial2Quantity(material2Quantity);</span>
+<span class="fc" id="L36">        setMaterial3Quantity(material3Quantity);</span>
+<span class="fc" id="L37">        setCost(cost);</span>
+<span class="fc" id="L38">    }</span>
+
+    public static void craftUIValidation(frmBlacksmith fb, String blacksmithID) {
+<span class="nc" id="L41">        String craftResponse = craft(blacksmithID);</span>
+<span class="nc" id="L42">        JOptionPane.showMessageDialog(fb ,craftResponse);</span>
+<span class="nc" id="L43">        DataSaver.savePlayerData();</span>
+<span class="nc" id="L44">        DataSaver.saveInventoryData();</span>
+<span class="nc" id="L45">    }</span>
+
+    //To craft a equip using materials in inventory
+    public static String craft(String blacksmithID){
+        try{
+<span class="fc" id="L50">            Blacksmith bs = DataStorage.getBlacksmithItem(blacksmithID);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if(bs != null){</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">                if((Player.money - bs.getCost()) &gt;= 0) {</span>
+<span class="fc" id="L53">                    Weapon w = DataStorage.getWeapon(bs.getItemID());</span>
+<span class="fc" id="L54">                    Armor a = DataStorage.getArmor(bs.getItemID());</span>
+<span class="fc" id="L55">                    Pendant p = DataStorage.getPendant(bs.getItemID());</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                    if(w != null){</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                        if(Player.weapon == null){</span>
+<span class="nc" id="L59">                            Player.weapon = w;</span>
+<span class="nc" id="L60">                            Player.money -= bs.getCost();</span>
+<span class="nc" id="L61">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="nc" id="L62">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="nc" id="L63">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="nc" id="L64">                            return &quot;Crafting &quot; + w.getName() + &quot;success&quot;;</span>
+                        }
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                        else if(w.getAdditionalAttack() &gt; Player.weapon.getAdditionalAttack()){</span>
+<span class="nc" id="L67">                            Player.weapon = w;</span>
+<span class="nc" id="L68">                            Player.money -= bs.getCost();</span>
+<span class="nc" id="L69">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="nc" id="L70">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="nc" id="L71">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="nc" id="L72">                            return &quot;Crafting &quot; + w.getName() + &quot;success&quot;;</span>
+                        }
+                        else{
+<span class="fc" id="L75">                            return &quot;You current weapon is more powerful than this&quot;;</span>
+                        }
+                    }
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                    else if(a != null){</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                        if(Player.armor == null){</span>
+<span class="nc" id="L80">                            Player.armor = a;</span>
+<span class="nc" id="L81">                            Player.money -= bs.getCost();</span>
+<span class="nc" id="L82">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="nc" id="L83">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="nc" id="L84">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="nc" id="L85">                            return &quot;Crafting &quot; + a.getName() + &quot;success&quot;;</span>
+                        }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                        else if(a.getAdditionalDefense() &gt; Player.armor.getAdditionalDefense()){</span>
+<span class="nc" id="L88">                            Player.armor = a;</span>
+<span class="nc" id="L89">                            Player.money -= bs.getCost();</span>
+<span class="nc" id="L90">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="nc" id="L91">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="nc" id="L92">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="nc" id="L93">                            return &quot;Crafting &quot; + a.getName() + &quot;success&quot;;</span>
+                        }
+                        else{
+<span class="fc" id="L96">                            return &quot;You current armor is more powerful than this&quot;;</span>
+                        }
+                    }
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                    else if(p != null){</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                        if(Player.pendant == null){</span>
+<span class="nc" id="L101">                            Player.pendant = p;</span>
+<span class="nc" id="L102">                            Player.money -= bs.getCost();</span>
+<span class="nc" id="L103">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="nc" id="L104">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="nc" id="L105">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="nc" id="L106">                            return &quot;Crafting &quot; + p.getName() + &quot;success&quot;;</span>
+                        }
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                        else if(p.getAdditionalMaxHealth() &gt;= Player.pendant.getAdditionalMaxHealth()){</span>
+<span class="fc" id="L109">                            Player.pendant = p;</span>
+<span class="fc" id="L110">                            Player.money -= bs.getCost();</span>
+<span class="fc" id="L111">                            Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());</span>
+<span class="fc" id="L112">                            Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());</span>
+<span class="fc" id="L113">                            Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());</span>
+<span class="fc" id="L114">                            return &quot;Crafting &quot; + p.getName() + &quot;success&quot;;</span>
+                        }
+                        else{
+<span class="nc" id="L117">                            return &quot;You current pendant is more powerful than this&quot;;</span>
+                        }
+                    }
+<span class="nc" id="L120">                }</span>
+                else{
+<span class="nc" id="L122">                    return &quot;You dont have enough money&quot;;</span>
+                }
+<span class="nc" id="L124">                return &quot;&quot;;</span>
+            }
+<span class="fc" id="L126">            throw new Exception();</span>
+        }
+<span class="fc" id="L128">        catch (Exception ex){</span>
+<span class="fc" id="L129">            System.err.println(&quot;Something went wrong in craft: &quot; + ex);</span>
+<span class="fc" id="L130">            throw new RuntimeException();</span>
+        }
+    }
+
+    //Get craft item name
+    public static String getCraftItemName(String itemID){
+        try{
+<span class="fc" id="L137">            Weapon w = DataStorage.getWeapon(itemID);</span>
+<span class="fc" id="L138">            Armor a = DataStorage.getArmor(itemID);</span>
+<span class="fc" id="L139">            Pendant p = DataStorage.getPendant(itemID);</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            if(w != null){</span>
+<span class="fc" id="L142">                return w.getName();</span>
+            }
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            else if (a != null){</span>
+<span class="fc" id="L145">                return a.getName();</span>
+            }
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            else if(p != null){</span>
+<span class="fc" id="L148">                return p.getName();</span>
+            }
+        }
+<span class="nc" id="L151">        catch (Exception ex){</span>
+<span class="nc" id="L152">            System.err.println(&quot;Something went wrong in getCraftItemName: &quot; + ex);</span>
+<span class="nc" id="L153">            throw new RuntimeException();</span>
+<span class="fc" id="L154">        }</span>
+<span class="fc" id="L155">        return &quot;&quot;;</span>
+    }
+
+    //Getter Setter
+    public String getItemID() {
+<span class="fc" id="L160">        return itemID;</span>
+    }
+
+    public void setItemID(String itemID) {
+<span class="fc" id="L164">        this.itemID = itemID;</span>
+<span class="fc" id="L165">    }</span>
+
+    public String getMaterial1ID() {
+<span class="fc" id="L168">        return material1ID;</span>
+    }
+
+    public void setMaterial1ID(String material1ID) {
+<span class="fc" id="L172">        this.material1ID = material1ID;</span>
+<span class="fc" id="L173">    }</span>
+
+    public String getMaterial2ID() {
+<span class="fc" id="L176">        return material2ID;</span>
+    }
+
+    public void setMaterial2ID(String material2ID) {
+<span class="fc" id="L180">        this.material2ID = material2ID;</span>
+<span class="fc" id="L181">    }</span>
+
+    public String getMaterial3ID() {
+<span class="fc" id="L184">        return material3ID;</span>
+    }
+
+    public void setMaterial3ID(String material3ID) {
+<span class="fc" id="L188">        this.material3ID = material3ID;</span>
+<span class="fc" id="L189">    }</span>
+
+    public int getMaterial1Quantity() {
+<span class="fc" id="L192">        return material1Quantity;</span>
+    }
+
+    public void setMaterial1Quantity(int material1Quantity) {
+<span class="fc" id="L196">        this.material1Quantity = material1Quantity;</span>
+<span class="fc" id="L197">    }</span>
+
+    public int getMaterial2Quantity() {
+<span class="fc" id="L200">        return material2Quantity;</span>
+    }
+
+    public void setMaterial2Quantity(int material2Quantity) {
+<span class="fc" id="L204">        this.material2Quantity = material2Quantity;</span>
+<span class="fc" id="L205">    }</span>
+
+    public int getMaterial3Quantity() {
+<span class="fc" id="L208">        return material3Quantity;</span>
+    }
+
+    public void setMaterial3Quantity(int material3Quantity) {
+<span class="fc" id="L212">        this.material3Quantity = material3Quantity;</span>
+<span class="fc" id="L213">    }</span>
+
+    public int getCost() {
+<span class="fc" id="L216">        return cost;</span>
+    }
+
+    public void setCost(int cost) {
+<span class="fc" id="L220">        this.cost = cost;</span>
+<span class="fc" id="L221">    }</span>
+
+    public String getBlacksmithID() {
+<span class="nc" id="L224">        return blacksmithID;</span>
+    }
+
+    public void setBlacksmithID(String blacksmithID) {
+<span class="fc" id="L228">        this.blacksmithID = blacksmithID;</span>
+<span class="fc" id="L229">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

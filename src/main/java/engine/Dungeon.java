@@ -22,14 +22,48 @@ public class Dungeon {
         setStatus(status);
     }
 
+    public static String afterBattleAction(Boss boss, String action) {
+        Random rand = new Random();
+        StringBuilder result = new StringBuilder();
+        int moneyDrop = rand.nextInt(500 - 1) + 1;
+        int expDrop = boss.getExpDrop();
+
+        if(Player.health == 0){
+            int totalMoney = Player.money - moneyDrop;
+            Player.money = Math.max(totalMoney, 0);
+            DataSaver.savePlayerData();
+            result.append("You lose agains ").append(boss.getName()).append("\n");
+            result.append("You dropped $").append(moneyDrop);
+            result.append(" in the panic\n");
+            DataSaver.saveInventoryData();
+            return result.toString();
+        }
+        else if(boss.getHealth() == 0){
+            Player.exp += expDrop;
+            Player.money += moneyDrop;
+            Player.levelUp();
+            HuntingItem hi = DataStorage.getHuntingItem(boss.getItemDropID());
+            Inventory.insertItem(Objects.requireNonNull(hi).getItemID(), hi.getType(), 3);
+            DataSaver.saveInventoryData();
+            DataSaver.savePlayerData();
+            result.append("You win agains ").append(boss.getName()).append("\n");
+            result.append("You get ").append(expDrop);
+            result.append(" exp, $").append(moneyDrop);
+            result.append(" money\n").append("and ");
+            result.append(hi.getName()).append("\n");
+            return result.toString();
+        }
+        else{
+            result.append(action);
+            return result.toString();
+        }
+    }
+
     //Dungeon battle system
     public static String dungeonBattle(Boss boss, String playerMove, String bossMove){
         Random rand = new Random();
         StringBuilder result = new StringBuilder();
         try{
-            int moneyDrop = rand.nextInt(500 - 1) + 1;
-            int expDrop = boss.getExpDrop();
-
             //Damage validation
             int playerDamage = Player.damage(boss.getBaseDefense());
             if(playerDamage < 0){
@@ -153,35 +187,6 @@ public class Dungeon {
             else{
                 System.out.println("The move is not exist");
             }
-
-            if(Player.health == 0){
-                int totalMoney = Player.money - moneyDrop;
-                Player.money = Math.max(totalMoney, 0);
-                DataSaver.savePlayerData();
-                result.append("You lose agains ").append(boss.getName()).append("\n");
-                result.append("You dropped $").append(moneyDrop);
-                result.append(" in the panic\n");
-                DataSaver.saveInventoryData();
-                return result.toString();
-            }
-            else if(boss.getHealth() == 0){
-                Player.exp += expDrop;
-                Player.money += moneyDrop;
-                Player.levelUp();
-                HuntingItem hi = DataStorage.getHuntingItem(boss.getItemDropID());
-                Inventory.insertItem(Objects.requireNonNull(hi).getItemID(), hi.getType(), 3);
-                DataSaver.saveInventoryData();
-                DataSaver.savePlayerData();
-                result.append("You win agains ").append(boss.getName()).append("\n");
-                result.append("You get ").append(expDrop);
-                result.append(" exp, $").append(moneyDrop);
-                result.append(" money\n").append("and ");
-                result.append(hi.getName()).append("\n");
-                return result.toString();
-            }
-            else{
-                return result.toString();
-            }
         }
         catch (Exception ex){
             System.err.println("Something went wrong in dungeonBattle : " + ex);
@@ -196,11 +201,14 @@ public class Dungeon {
                 if(DataStorage.LD.get(i).getDungeonID().equals(dungeonID)){
                     DataStorage.LD.set(i, new Dungeon(dungeonID, mapID, bossID, status));
                     DataSaver.saveDungeonData();
+                    return;
                 }
             }
+            throw new Exception("Dungeon not found");
         }
         catch (Exception ex){
             System.err.println("Something went wrong in updateDungeon: " + ex);
+            throw new RuntimeException();
         }
     }
 

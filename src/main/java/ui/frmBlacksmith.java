@@ -104,7 +104,7 @@ public class frmBlacksmith extends JDialog implements ActionListener {
                         if(material3){
                             int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to craft this?", "Select an option...", JOptionPane.YES_NO_OPTION);
                             if (confirmation == 0) {
-                                Blacksmith.craft(this, btnCraft.getName());
+                                Blacksmith.craftUIValidation(this, btnCraft.getName());
                                 fgm.reload();
                                 this.dispatchEvent(new WindowEvent(frmBlacksmith.this, WindowEvent.WINDOW_CLOSING));
                             }

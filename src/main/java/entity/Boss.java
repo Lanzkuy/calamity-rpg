@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Random;
+
 public class Boss extends Enemy{
     public Boss(String enemyID, String mapID, String name, String type,
                      String itemDropID, int baseMaxHealth, int baseAttack,

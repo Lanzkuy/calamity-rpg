@@ -37,9 +37,15 @@ public class Blacksmith {
         setCost(cost);
     }
 
-    //To craft a equip using materials in inventory
-    public static void craft(frmBlacksmith fb, String blacksmithID){
+    public static void craftUIValidation(frmBlacksmith fb, String blacksmithID) {
+        String craftResponse = craft(blacksmithID);
+        JOptionPane.showMessageDialog(fb ,craftResponse);
+        DataSaver.savePlayerData();
+        DataSaver.saveInventoryData();
+    }
 
+    //To craft a equip using materials in inventory
+    public static String craft(String blacksmithID){
         try{
             Blacksmith bs = DataStorage.getBlacksmithItem(blacksmithID);
             if(bs != null){
@@ -55,7 +61,7 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+                            return "Crafting " + w.getName() + "success";
                         }
                         else if(w.getAdditionalAttack() > Player.weapon.getAdditionalAttack()){
                             Player.weapon = w;
@@ -63,10 +69,10 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + w.getName() + "success");
+                            return "Crafting " + w.getName() + "success";
                         }
                         else{
-                            JOptionPane.showMessageDialog(fb ,"You current weapon is more powerful than this");
+                            return "You current weapon is more powerful than this";
                         }
                     }
                     else if(a != null){
@@ -76,7 +82,7 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
+                            return "Crafting " + a.getName() + "success";
                         }
                         else if(a.getAdditionalDefense() > Player.armor.getAdditionalDefense()){
                             Player.armor = a;
@@ -84,10 +90,10 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + a.getName() + "success");
+                            return "Crafting " + a.getName() + "success";
                         }
                         else{
-                            JOptionPane.showMessageDialog(fb ,"You current armor is more powerful than this");
+                            return "You current armor is more powerful than this";
                         }
                     }
                     else if(p != null){
@@ -97,7 +103,7 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
+                            return "Crafting " + p.getName() + "success";
                         }
                         else if(p.getAdditionalMaxHealth() >= Player.pendant.getAdditionalMaxHealth()){
                             Player.pendant = p;
@@ -105,54 +111,51 @@ public class Blacksmith {
                             Inventory.updateItem(bs.getMaterial1ID(), -bs.getMaterial1Quantity());
                             Inventory.updateItem(bs.getMaterial2ID(), -bs.getMaterial2Quantity());
                             Inventory.updateItem(bs.getMaterial3ID(), -bs.getMaterial3Quantity());
-                            JOptionPane.showMessageDialog(fb ,"Crafting " + p.getName() + "success");
+                            return "Crafting " + p.getName() + "success";
                         }
                         else{
-                            JOptionPane.showMessageDialog(fb ,"You current pendant is more powerful than this");
+                            return "You current pendant is more powerful than this";
                         }
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(fb, "You dont have enough money");
+                    return "You dont have enough money";
                 }
+                return "";
             }
-            DataSaver.savePlayerData();
-            DataSaver.saveInventoryData();
+            throw new Exception();
         }
         catch (Exception ex){
             System.err.println("Something went wrong in craft: " + ex);
+            throw new RuntimeException();
         }
     }
 
     //Get craft item name
     public static String getCraftItemName(String itemID){
-        String craftItemName = "";
         try{
             Weapon w = DataStorage.getWeapon(itemID);
             Armor a = DataStorage.getArmor(itemID);
             Pendant p = DataStorage.getPendant(itemID);
 
             if(w != null){
-                craftItemName = w.getName();
+                return w.getName();
             }
             else if (a != null){
-                craftItemName = a.getName();
+                return a.getName();
             }
             else if(p != null){
-                craftItemName = p.getName();
+                return p.getName();
             }
         }
         catch (Exception ex){
             System.err.println("Something went wrong in getCraftItemName: " + ex);
+            throw new RuntimeException();
         }
-        return craftItemName;
+        return "";
     }
 
     //Getter Setter
-    public void setBlacksmithID(String blacksmithID) {
-        this.blacksmithID = blacksmithID;
-    }
-
     public String getItemID() {
         return itemID;
     }
@@ -215,5 +218,13 @@ public class Blacksmith {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public String getBlacksmithID() {
+        return blacksmithID;
+    }
+
+    public void setBlacksmithID(String blacksmithID) {
+        this.blacksmithID = blacksmithID;
     }
 }

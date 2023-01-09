@@ -1,6 +1,6 @@
 DungeonID;MapID;EnemyID;Status
 DG01;MP01;ENM005;Defeated;
-DG02;MP02;ENM009;Defeated;
+DG02;MP02;ENM009;Available;
 DG03;MP03;ENM013;Available;
 DG04;MP03;ENM014;Available;
 DG05;MP04;ENM017;Available;

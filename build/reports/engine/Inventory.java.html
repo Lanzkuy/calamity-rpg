@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Inventory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">engine in calamity-rpg.test Coverage Results</a> &gt; <a href="index.source.html" class="el_package">engine</a> &gt; <span class="el_source">Inventory.java</span></div><h1>Inventory.java</h1><pre class="source lang-java linenums">package engine;
+
+import data.*;
+import items.*;
+
+
+public class Inventory {
+    private String itemID;
+    private String name;
+    private String type;
+    private int quantity;
+
+<span class="fc" id="L13">    public Inventory(String itemID, String name, String type, int quantity){</span>
+<span class="fc" id="L14">        setItemID(itemID);</span>
+<span class="fc" id="L15">        setName(name);</span>
+<span class="fc" id="L16">        setType(type);</span>
+<span class="fc" id="L17">        setQuantity(quantity);</span>
+<span class="fc" id="L18">    }</span>
+
+    //To put item into inventory
+    public static void insertItem(String itemID, String type, int quantity) {
+        try{
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">            if(type.equals(&quot;Consumable&quot;)){</span>
+<span class="nc" id="L24">                Consumable c = DataStorage.getConsumable(itemID);</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">                if(c != null){</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">                    if(!isItemExist(c.getItemID())){</span>
+<span class="nc" id="L27">                        DataStorage.LI.add(new Inventory(c.getItemID(), c.getName(), c.getType(), quantity));</span>
+                    }
+                    else{
+<span class="nc" id="L30">                        updateItem(c.getItemID(), quantity);</span>
+                    }
+                }
+<span class="nc" id="L33">            }</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            else if(type.equals(&quot;Hunting Item&quot;)){</span>
+<span class="fc" id="L35">                HuntingItem hi = DataStorage.getHuntingItem(itemID);</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">                if(hi != null){</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                    if(!isItemExist(hi.getItemID())){</span>
+<span class="fc" id="L38">                        DataStorage.LI.add(new Inventory(hi.getItemID(), hi.getName(), hi.getType(), quantity));</span>
+                    }
+                    else{
+<span class="fc" id="L41">                        updateItem(hi.getItemID(), quantity);</span>
+                    }
+                }
+<span class="fc" id="L44">            }</span>
+            else{
+<span class="nc" id="L46">                System.out.println(&quot;This type of item is illegal&quot;);</span>
+            }
+        }
+<span class="fc" id="L49">        catch (Exception ex){</span>
+<span class="fc" id="L50">            System.err.println(&quot;Something went wrong in insertItem: &quot; + ex);</span>
+<span class="fc" id="L51">            throw new RuntimeException();</span>
+<span class="fc" id="L52">        }</span>
+<span class="fc" id="L53">    }</span>
+
+    //To update exist item in inventory
+    public static void updateItem(String itemID, int quantity) {
+        try{
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            for (int i = 0; i&lt;DataStorage.LI.size(); i++){</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                if(DataStorage.LI.get(i).getItemID().equals(itemID)){</span>
+<span class="fc" id="L60">                    DataStorage.LI.set(i, new Inventory(itemID, DataStorage.LI.get(i).getName(),</span>
+<span class="fc" id="L61">                            DataStorage.LI.get(i).getType(), DataStorage.LI.get(i).getQuantity() + quantity));</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">                    if(DataStorage.LI.get(i).getQuantity() &lt;= 0){</span>
+<span class="nc" id="L63">                        deleteItem(DataStorage.LI.get(i).getItemID());</span>
+<span class="nc" id="L64">                        return;</span>
+                    }
+<span class="fc" id="L66">                    return;</span>
+                }
+            }
+<span class="fc" id="L69">            throw new Exception(&quot;Item not found&quot;);</span>
+        }
+<span class="fc" id="L71">        catch (Exception ex){</span>
+<span class="fc" id="L72">            System.err.println(&quot;Something went wrong in updateItem: &quot; + ex);</span>
+<span class="fc" id="L73">            throw new RuntimeException();</span>
+        }
+    }
+
+    //To delete item when quantity 0
+    public static void deleteItem(String itemID) {
+        try{
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            for (int i = 0; i&lt;DataStorage.LI.size(); i++){</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                if(DataStorage.LI.get(i).getItemID().equals(itemID)){</span>
+<span class="fc" id="L82">                    DataStorage.LI.remove(i);</span>
+<span class="fc" id="L83">                    return;</span>
+                }
+            }
+<span class="fc" id="L86">            throw new Exception(&quot;Item not found&quot;);</span>
+        }
+<span class="fc" id="L88">        catch (Exception ex){</span>
+<span class="fc" id="L89">            System.err.println(&quot;Something went wrong in deleteItem: &quot; + ex);</span>
+<span class="fc" id="L90">            throw new RuntimeException();</span>
+        }
+    }
+
+    //To check if the item is existed in inventory
+    public static boolean isItemExist(String itemID){
+        try{
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            for (int i = 0; i&lt;DataStorage.LI.size(); i++){</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">                if(DataStorage.LI.get(i).getItemID().equals(itemID)){</span>
+<span class="fc" id="L99">                    return true;</span>
+                }
+            }
+        }
+<span class="nc" id="L103">        catch (Exception ex){</span>
+<span class="nc" id="L104">            System.err.println(&quot;Something went wrong in isItemExist: &quot; + ex);</span>
+<span class="fc" id="L105">        }</span>
+<span class="fc" id="L106">        return false;</span>
+    }
+
+    //Getter Setter
+    public String getItemID() {
+<span class="fc" id="L111">        return itemID;</span>
+    }
+
+    public void setItemID(String itemID) {
+<span class="fc" id="L115">        this.itemID = itemID;</span>
+<span class="fc" id="L116">    }</span>
+
+    public String getName() {
+<span class="fc" id="L119">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L123">        this.name = name;</span>
+<span class="fc" id="L124">    }</span>
+
+    public String getType() {
+<span class="fc" id="L127">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="fc" id="L131">        this.type = type;</span>
+<span class="fc" id="L132">    }</span>
+
+    public int getQuantity() {
+<span class="fc" id="L135">        return quantity;</span>
+    }
+
+    public void setQuantity(int quantity) {
+<span class="fc" id="L139">        this.quantity = quantity;</span>
+<span class="fc" id="L140">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -18,12 +18,12 @@ public class Inventory {
     }
 
     //To put item into inventory
-    public static void insertItem(String itemID, String type, int quantity){
+    public static void insertItem(String itemID, String type, int quantity) {
         try{
             if(type.equals("Consumable")){
                 Consumable c = DataStorage.getConsumable(itemID);
                 if(c != null){
-                    if(isItemExist(c.getItemID())){
+                    if(!isItemExist(c.getItemID())){
                         DataStorage.LI.add(new Inventory(c.getItemID(), c.getName(), c.getType(), quantity));
                     }
                     else{
@@ -34,7 +34,7 @@ public class Inventory {
             else if(type.equals("Hunting Item")){
                 HuntingItem hi = DataStorage.getHuntingItem(itemID);
                 if(hi != null){
-                    if(isItemExist(hi.getItemID())){
+                    if(!isItemExist(hi.getItemID())){
                         DataStorage.LI.add(new Inventory(hi.getItemID(), hi.getName(), hi.getType(), quantity));
                     }
                     else{
@@ -48,11 +48,12 @@ public class Inventory {
         }
         catch (Exception ex){
             System.err.println("Something went wrong in insertItem: " + ex);
+            throw new RuntimeException();
         }
     }
 
     //To update exist item in inventory
-    public static void updateItem(String itemID, int quantity){
+    public static void updateItem(String itemID, int quantity) {
         try{
             for (int i = 0; i<DataStorage.LI.size(); i++){
                 if(DataStorage.LI.get(i).getItemID().equals(itemID)){
@@ -60,27 +61,33 @@ public class Inventory {
                             DataStorage.LI.get(i).getType(), DataStorage.LI.get(i).getQuantity() + quantity));
                     if(DataStorage.LI.get(i).getQuantity() <= 0){
                         deleteItem(DataStorage.LI.get(i).getItemID());
+                        return;
                     }
+                    return;
                 }
             }
+            throw new Exception("Item not found");
         }
         catch (Exception ex){
             System.err.println("Something went wrong in updateItem: " + ex);
+            throw new RuntimeException();
         }
     }
 
     //To delete item when quantity 0
-    public static void deleteItem(String itemID){
+    public static void deleteItem(String itemID) {
         try{
             for (int i = 0; i<DataStorage.LI.size(); i++){
                 if(DataStorage.LI.get(i).getItemID().equals(itemID)){
                     DataStorage.LI.remove(i);
-                    break;
+                    return;
                 }
             }
+            throw new Exception("Item not found");
         }
         catch (Exception ex){
             System.err.println("Something went wrong in deleteItem: " + ex);
+            throw new RuntimeException();
         }
     }
 
@@ -89,14 +96,14 @@ public class Inventory {
         try{
             for (int i = 0; i<DataStorage.LI.size(); i++){
                 if(DataStorage.LI.get(i).getItemID().equals(itemID)){
-                    return false;
+                    return true;
                 }
             }
         }
         catch (Exception ex){
             System.err.println("Something went wrong in isItemExist: " + ex);
         }
-        return true;
+        return false;
     }
 
     //Getter Setter
